@@ -1,0 +1,30 @@
+[
+    {
+        "merged": "/Users/jack/IdeaProjects/GraphicsLingoGen2/build/intermediates/res/merged/release/drawable-v21/notification_action_background.xml",
+        "source": "/Users/jack/.gradle/caches/transforms-3/58b2d1b530e48be529edc5696092de2e/transformed/core-1.2.0/res/drawable-v21/notification_action_background.xml"
+    },
+    {
+        "merged": "/Users/jack/IdeaProjects/GraphicsLingoGen2/build/intermediates/res/merged/release/drawable-v21/abc_dialog_material_background.xml",
+        "source": "/Users/jack/.gradle/caches/transforms-3/760495a2e1a0778cf6f785e9cbd6cf74/transformed/appcompat-1.1.0/res/drawable-v21/abc_dialog_material_background.xml"
+    },
+    {
+        "merged": "/Users/jack/IdeaProjects/GraphicsLingoGen2/build/intermediates/res/merged/release/drawable-v21/abc_btn_colored_material.xml",
+        "source": "/Users/jack/.gradle/caches/transforms-3/760495a2e1a0778cf6f785e9cbd6cf74/transformed/appcompat-1.1.0/res/drawable-v21/abc_btn_colored_material.xml"
+    },
+    {
+        "merged": "/Users/jack/IdeaProjects/GraphicsLingoGen2/build/intermediates/res/merged/release/drawable-v21/abc_list_divider_material.xml",
+        "source": "/Users/jack/.gradle/caches/transforms-3/760495a2e1a0778cf6f785e9cbd6cf74/transformed/appcompat-1.1.0/res/drawable-v21/abc_list_divider_material.xml"
+    },
+    {
+        "merged": "/Users/jack/IdeaProjects/GraphicsLingoGen2/build/intermediates/res/merged/release/drawable-v21/abc_action_bar_item_background_material.xml",
+        "source": "/Users/jack/.gradle/caches/transforms-3/760495a2e1a0778cf6f785e9cbd6cf74/transformed/appcompat-1.1.0/res/drawable-v21/abc_action_bar_item_background_material.xml"
+    },
+    {
+        "merged": "/Users/jack/IdeaProjects/GraphicsLingoGen2/build/intermediates/res/merged/release/drawable-v21/abc_edit_text_material.xml",
+        "source": "/Users/jack/.gradle/caches/transforms-3/760495a2e1a0778cf6f785e9cbd6cf74/transformed/appcompat-1.1.0/res/drawable-v21/abc_edit_text_material.xml"
+    },
+    {
+        "merged": "/Users/jack/IdeaProjects/GraphicsLingoGen2/build/intermediates/res/merged/release/drawable-v21/design_bottom_navigation_item_background.xml",
+        "source": "/Users/jack/.gradle/caches/transforms-3/54f9e15797f0b274e83681e7e617da2a/transformed/material-1.2.1/res/drawable-v21/design_bottom_navigation_item_background.xml"
+    }
+]

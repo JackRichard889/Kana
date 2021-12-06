@@ -1,0 +1,2 @@
+me/jack/library/BuildConfig.java
+ me.jack.library.BuildConfig

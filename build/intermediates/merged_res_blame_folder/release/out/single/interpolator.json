@@ -1,0 +1,34 @@
+[
+    {
+        "merged": "/Users/jack/IdeaProjects/GraphicsLingoGen2/build/intermediates/res/merged/release/interpolator/btn_checkbox_checked_mtrl_animation_interpolator_1.xml",
+        "source": "/Users/jack/.gradle/caches/transforms-3/760495a2e1a0778cf6f785e9cbd6cf74/transformed/appcompat-1.1.0/res/interpolator/btn_checkbox_checked_mtrl_animation_interpolator_1.xml"
+    },
+    {
+        "merged": "/Users/jack/IdeaProjects/GraphicsLingoGen2/build/intermediates/res/merged/release/interpolator/mtrl_linear.xml",
+        "source": "/Users/jack/.gradle/caches/transforms-3/54f9e15797f0b274e83681e7e617da2a/transformed/material-1.2.1/res/interpolator/mtrl_linear.xml"
+    },
+    {
+        "merged": "/Users/jack/IdeaProjects/GraphicsLingoGen2/build/intermediates/res/merged/release/interpolator/btn_checkbox_unchecked_mtrl_animation_interpolator_0.xml",
+        "source": "/Users/jack/.gradle/caches/transforms-3/760495a2e1a0778cf6f785e9cbd6cf74/transformed/appcompat-1.1.0/res/interpolator/btn_checkbox_unchecked_mtrl_animation_interpolator_0.xml"
+    },
+    {
+        "merged": "/Users/jack/IdeaProjects/GraphicsLingoGen2/build/intermediates/res/merged/release/interpolator/fast_out_slow_in.xml",
+        "source": "/Users/jack/.gradle/caches/transforms-3/760495a2e1a0778cf6f785e9cbd6cf74/transformed/appcompat-1.1.0/res/interpolator/fast_out_slow_in.xml"
+    },
+    {
+        "merged": "/Users/jack/IdeaProjects/GraphicsLingoGen2/build/intermediates/res/merged/release/interpolator/btn_radio_to_on_mtrl_animation_interpolator_0.xml",
+        "source": "/Users/jack/.gradle/caches/transforms-3/760495a2e1a0778cf6f785e9cbd6cf74/transformed/appcompat-1.1.0/res/interpolator/btn_radio_to_on_mtrl_animation_interpolator_0.xml"
+    },
+    {
+        "merged": "/Users/jack/IdeaProjects/GraphicsLingoGen2/build/intermediates/res/merged/release/interpolator/btn_radio_to_off_mtrl_animation_interpolator_0.xml",
+        "source": "/Users/jack/.gradle/caches/transforms-3/760495a2e1a0778cf6f785e9cbd6cf74/transformed/appcompat-1.1.0/res/interpolator/btn_radio_to_off_mtrl_animation_interpolator_0.xml"
+    },
+    {
+        "merged": "/Users/jack/IdeaProjects/GraphicsLingoGen2/build/intermediates/res/merged/release/interpolator/btn_checkbox_checked_mtrl_animation_interpolator_0.xml",
+        "source": "/Users/jack/.gradle/caches/transforms-3/760495a2e1a0778cf6f785e9cbd6cf74/transformed/appcompat-1.1.0/res/interpolator/btn_checkbox_checked_mtrl_animation_interpolator_0.xml"
+    },
+    {
+        "merged": "/Users/jack/IdeaProjects/GraphicsLingoGen2/build/intermediates/res/merged/release/interpolator/btn_checkbox_unchecked_mtrl_animation_interpolator_1.xml",
+        "source": "/Users/jack/.gradle/caches/transforms-3/760495a2e1a0778cf6f785e9cbd6cf74/transformed/appcompat-1.1.0/res/interpolator/btn_checkbox_unchecked_mtrl_animation_interpolator_1.xml"
+    }
+]

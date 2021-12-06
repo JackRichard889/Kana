@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/Users/jack/IdeaProjects/GraphicsLingoGen2/build/intermediates/res/merged/release/drawable-v23/abc_control_background_material.xml",
+        "source": "/Users/jack/.gradle/caches/transforms-3/760495a2e1a0778cf6f785e9cbd6cf74/transformed/appcompat-1.1.0/res/drawable-v23/abc_control_background_material.xml"
+    },
+    {
+        "merged": "/Users/jack/IdeaProjects/GraphicsLingoGen2/build/intermediates/res/merged/release/drawable-v23/mtrl_popupmenu_background_dark.xml",
+        "source": "/Users/jack/.gradle/caches/transforms-3/54f9e15797f0b274e83681e7e617da2a/transformed/material-1.2.1/res/drawable-v23/mtrl_popupmenu_background_dark.xml"
+    }
+]
