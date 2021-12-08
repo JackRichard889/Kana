@@ -20,6 +20,8 @@ actual class KGLView @OverrideInit constructor(coder: NSCoder) : UIViewControlle
         val view = MTKView()
         val device = MTLCreateSystemDefaultDevice()!!
 
+        KGLGlobals.device = device
+
         view.device = device
         view.delegate = KGLMetalProtocolDelegate()
         view.clearColor = MTLClearColorMake(1.0, 1.0, 1.0, 1.0)

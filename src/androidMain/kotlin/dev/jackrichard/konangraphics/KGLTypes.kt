@@ -22,6 +22,20 @@ actual class KGLContext {
     }
 }
 
+actual object KGLGlobals
+
+actual class KGLTexture actual constructor(source: KGLAsset) {
+    // private lateinit var raw:
+}
+
+actual class KGLModel actual constructor(source: KGLAsset) {
+    // TODO: implement models for Android
+}
+
+actual class KGLFont actual constructor(source: KGLAsset) {
+    // TODO: implement fonts for Android
+}
+
 actual class KGLShader {
     var shader: Int = 0
 }
