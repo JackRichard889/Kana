@@ -1,14 +1,12 @@
 package dev.jackrichard.konangraphics
 
-import kotlinx.cinterop.pointed
-import kotlinx.cinterop.rawValue
-import platform.CoreFoundation.CFBundleGetMainBundle
+import platform.Foundation.NSBundle
 import platform.Foundation.NSError
 import platform.Metal.MTLDeviceProtocol
 import platform.Metal.MTLFunctionProtocol
 import platform.Metal.MTLTextureProtocol
 import platform.MetalKit.*
-import kotlin.native.concurrent.freeze
+import platform.ModelIO.MDLAsset
 
 actual class KGLContext {
     lateinit var delegateView: MTKView
@@ -50,11 +48,12 @@ actual class KGLTexture actual constructor(source: KGLAsset) {
 }
 
 actual class KGLModel actual constructor(source: KGLAsset) {
-    private lateinit var raw: MTKMesh
+    private var raw: MTKMesh
 
-    // TODO: implement models for iOS
     init {
-
+        val file = NSBundle.mainBundle.URLForResource(source.name, source.extension)
+        val asset = MDLAsset(uRL = file, vertexDescriptor = null, bufferAllocator = null)
+        raw = (MTKMesh.newMeshesFromAsset(asset, KGLGlobals.device, null, null)?.get(1) as List<MTKMesh>).first()
     }
 }
 
