@@ -6,6 +6,10 @@
 #import <Foundation/NSString.h>
 #import <Foundation/NSValue.h>
 
+@class LibraryKGLFont, LibraryKGLModel, LibraryKGLTexture, LibraryKGLShader, LibraryKGLShaderType, MTKView, LibraryKGLContext, LibraryKotlinPair<__covariant A, __covariant B>, LibraryKGLAsset, LibraryKGLGlobals, LibraryKotlinEnumCompanion, LibraryKotlinEnum<E>, LibraryKotlinArray<T>;
+
+@protocol MTLDevice, MTLFunction, LibraryKotlinComparable, LibraryKotlinIterator;
+
 NS_ASSUME_NONNULL_BEGIN
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunknown-warning-option"
@@ -141,19 +145,148 @@ __attribute__((swift_name("KotlinBoolean")))
 @end;
 
 __attribute__((objc_subclassing_restricted))
-__attribute__((swift_name("Greeting")))
-@interface LibraryGreeting : LibraryBase
-- (instancetype)init __attribute__((swift_name("init()"))) __attribute__((objc_designated_initializer));
-+ (instancetype)new __attribute__((availability(swift, unavailable, message="use object initializers instead")));
-- (NSString *)greeting __attribute__((swift_name("greeting()")));
+__attribute__((swift_name("KGLAsset")))
+@interface LibraryKGLAsset : LibraryBase
+- (instancetype)initWithName:(NSString *)name extension:(NSString *)extension __attribute__((swift_name("init(name:extension:)"))) __attribute__((objc_designated_initializer));
+- (LibraryKGLFont *)asFont __attribute__((swift_name("asFont()")));
+- (LibraryKGLModel *)asModel __attribute__((swift_name("asModel()")));
+- (LibraryKGLTexture *)asTexture __attribute__((swift_name("asTexture()")));
+@property (readonly) NSString *extension __attribute__((swift_name("extension")));
+@property (readonly) NSString *name __attribute__((swift_name("name")));
 @end;
 
 __attribute__((objc_subclassing_restricted))
-__attribute__((swift_name("Platform")))
-@interface LibraryPlatform : LibraryBase
+__attribute__((swift_name("KGLContext")))
+@interface LibraryKGLContext : LibraryBase
 - (instancetype)init __attribute__((swift_name("init()"))) __attribute__((objc_designated_initializer));
 + (instancetype)new __attribute__((availability(swift, unavailable, message="use object initializers instead")));
-@property (readonly) NSString *platform __attribute__((swift_name("platform")));
+- (LibraryKGLShader *)compileShaderSource:(NSString *)source name:(NSString *)name type:(LibraryKGLShaderType *)type __attribute__((swift_name("compileShader(source:name:type:)")));
+@property MTKView *delegateView __attribute__((swift_name("delegateView")));
+@end;
+
+__attribute__((swift_name("KGLDelegate")))
+@protocol LibraryKGLDelegate
+@required
+- (void)onDrawFrameController:(LibraryKGLContext *)controller __attribute__((swift_name("onDrawFrame(controller:)")));
+- (void)onInitialized __attribute__((swift_name("onInitialized()")));
+- (void)onScreenResizesSize:(LibraryKotlinPair<LibraryInt *, LibraryInt *> *)size __attribute__((swift_name("onScreenResizes(size:)")));
+@end;
+
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("KGLFont")))
+@interface LibraryKGLFont : LibraryBase
+- (instancetype)initWithSource:(LibraryKGLAsset *)source __attribute__((swift_name("init(source:)"))) __attribute__((objc_designated_initializer));
+@end;
+
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("KGLGlobals")))
+@interface LibraryKGLGlobals : LibraryBase
++ (instancetype)alloc __attribute__((unavailable));
++ (instancetype)allocWithZone:(struct _NSZone *)zone __attribute__((unavailable));
++ (instancetype)kGLGlobals __attribute__((swift_name("init()")));
+@property (class, readonly, getter=shared) LibraryKGLGlobals *shared __attribute__((swift_name("shared")));
+@property id<MTLDevice> device __attribute__((swift_name("device")));
+@end;
+
+__attribute__((unavailable("Kotlin subclass of Objective-C class can't be imported")))
+__attribute__((swift_name("KGLMetalProtocolDelegate")))
+@interface LibraryKGLMetalProtocolDelegate : NSObject
+@end;
+
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("KGLModel")))
+@interface LibraryKGLModel : LibraryBase
+- (instancetype)initWithSource:(LibraryKGLAsset *)source __attribute__((swift_name("init(source:)"))) __attribute__((objc_designated_initializer));
+@end;
+
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("KGLShader")))
+@interface LibraryKGLShader : LibraryBase
+- (instancetype)init __attribute__((swift_name("init()"))) __attribute__((objc_designated_initializer));
++ (instancetype)new __attribute__((availability(swift, unavailable, message="use object initializers instead")));
+@property id<MTLFunction> shader __attribute__((swift_name("shader")));
+@end;
+
+__attribute__((swift_name("KotlinComparable")))
+@protocol LibraryKotlinComparable
+@required
+- (int32_t)compareToOther:(id _Nullable)other __attribute__((swift_name("compareTo(other:)")));
+@end;
+
+__attribute__((swift_name("KotlinEnum")))
+@interface LibraryKotlinEnum<E> : LibraryBase <LibraryKotlinComparable>
+- (instancetype)initWithName:(NSString *)name ordinal:(int32_t)ordinal __attribute__((swift_name("init(name:ordinal:)"))) __attribute__((objc_designated_initializer));
+@property (class, readonly, getter=companion) LibraryKotlinEnumCompanion *companion __attribute__((swift_name("companion")));
+- (int32_t)compareToOther:(E)other __attribute__((swift_name("compareTo(other:)")));
+- (BOOL)isEqual:(id _Nullable)other __attribute__((swift_name("isEqual(_:)")));
+- (NSUInteger)hash __attribute__((swift_name("hash()")));
+- (NSString *)description __attribute__((swift_name("description()")));
+@property (readonly) NSString *name __attribute__((swift_name("name")));
+@property (readonly) int32_t ordinal __attribute__((swift_name("ordinal")));
+@end;
+
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("KGLShaderType")))
+@interface LibraryKGLShaderType : LibraryKotlinEnum<LibraryKGLShaderType *>
++ (instancetype)alloc __attribute__((unavailable));
++ (instancetype)allocWithZone:(struct _NSZone *)zone __attribute__((unavailable));
+- (instancetype)initWithName:(NSString *)name ordinal:(int32_t)ordinal __attribute__((swift_name("init(name:ordinal:)"))) __attribute__((objc_designated_initializer)) __attribute__((unavailable));
+@property (class, readonly) LibraryKGLShaderType *fragment __attribute__((swift_name("fragment")));
+@property (class, readonly) LibraryKGLShaderType *vertex __attribute__((swift_name("vertex")));
++ (LibraryKotlinArray<LibraryKGLShaderType *> *)values __attribute__((swift_name("values()")));
+@end;
+
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("KGLTexture")))
+@interface LibraryKGLTexture : LibraryBase
+- (instancetype)initWithSource:(LibraryKGLAsset *)source __attribute__((swift_name("init(source:)"))) __attribute__((objc_designated_initializer));
+@end;
+
+__attribute__((unavailable("Kotlin subclass of Objective-C class can't be imported")))
+__attribute__((swift_name("KGLView")))
+@interface LibraryKGLView : NSObject
+@end;
+
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("KotlinPair")))
+@interface LibraryKotlinPair<__covariant A, __covariant B> : LibraryBase
+- (instancetype)initWithFirst:(A _Nullable)first second:(B _Nullable)second __attribute__((swift_name("init(first:second:)"))) __attribute__((objc_designated_initializer));
+- (A _Nullable)component1 __attribute__((swift_name("component1()")));
+- (B _Nullable)component2 __attribute__((swift_name("component2()")));
+- (LibraryKotlinPair<A, B> *)doCopyFirst:(A _Nullable)first second:(B _Nullable)second __attribute__((swift_name("doCopy(first:second:)")));
+- (BOOL)equalsOther:(id _Nullable)other __attribute__((swift_name("equals(other:)")));
+- (int32_t)hashCode __attribute__((swift_name("hashCode()")));
+- (NSString *)toString __attribute__((swift_name("toString()")));
+@property (readonly) A _Nullable first __attribute__((swift_name("first")));
+@property (readonly) B _Nullable second __attribute__((swift_name("second")));
+@end;
+
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("KotlinEnumCompanion")))
+@interface LibraryKotlinEnumCompanion : LibraryBase
++ (instancetype)alloc __attribute__((unavailable));
++ (instancetype)allocWithZone:(struct _NSZone *)zone __attribute__((unavailable));
++ (instancetype)companion __attribute__((swift_name("init()")));
+@property (class, readonly, getter=shared) LibraryKotlinEnumCompanion *shared __attribute__((swift_name("shared")));
+@end;
+
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("KotlinArray")))
+@interface LibraryKotlinArray<T> : LibraryBase
++ (instancetype)arrayWithSize:(int32_t)size init:(T _Nullable (^)(LibraryInt *))init __attribute__((swift_name("init(size:init:)")));
++ (instancetype)alloc __attribute__((unavailable));
++ (instancetype)allocWithZone:(struct _NSZone *)zone __attribute__((unavailable));
+- (T _Nullable)getIndex:(int32_t)index __attribute__((swift_name("get(index:)")));
+- (id<LibraryKotlinIterator>)iterator __attribute__((swift_name("iterator()")));
+- (void)setIndex:(int32_t)index value:(T _Nullable)value __attribute__((swift_name("set(index:value:)")));
+@property (readonly) int32_t size __attribute__((swift_name("size")));
+@end;
+
+__attribute__((swift_name("KotlinIterator")))
+@protocol LibraryKotlinIterator
+@required
+- (BOOL)hasNext __attribute__((swift_name("hasNext()")));
+- (id _Nullable)next __attribute__((swift_name("next()")));
 @end;
 
 #pragma pop_macro("_Nullable_result")

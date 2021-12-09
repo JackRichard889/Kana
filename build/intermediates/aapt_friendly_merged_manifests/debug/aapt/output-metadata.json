@@ -4,7 +4,7 @@
     "type": "AAPT_FRIENDLY_MERGED_MANIFESTS",
     "kind": "Directory"
   },
-  "applicationId": "me.jack.library",
+  "applicationId": "dev.jackrichard.konangraphics",
   "variantName": "debug",
   "elements": [
     {

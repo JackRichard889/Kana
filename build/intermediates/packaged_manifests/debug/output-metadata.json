@@ -4,7 +4,7 @@
     "type": "PACKAGED_MANIFESTS",
     "kind": "Directory"
   },
-  "applicationId": "me.jack.library",
+  "applicationId": "dev.jackrichard.konangraphics",
   "variantName": "debug",
   "elements": [
     {

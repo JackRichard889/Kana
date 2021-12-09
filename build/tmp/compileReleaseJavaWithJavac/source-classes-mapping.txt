@@ -1,2 +1,2 @@
-me/jack/library/BuildConfig.java
- me.jack.library.BuildConfig
+dev/jackrichard/konangraphics/BuildConfig.java
+ dev.jackrichard.konangraphics.BuildConfig

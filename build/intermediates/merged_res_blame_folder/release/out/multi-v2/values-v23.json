@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/jack/IdeaProjects/GraphicsLingoGen2/build/intermediates/incremental/mergeReleaseResources/merged.dir/values-v23/values-v23.xml",
+            "outputFile": "/Users/worcestertech/Documents/KonanGraphicsLanguage/build/intermediates/res/merged/release/values-v23/values-v23.xml",
             "map": [
                 {
-                    "source": "/Users/jack/.gradle/caches/transforms-3/7742f4d273ef80febe13eb0619070818/transformed/cardview-1.0.0/res/values-v23/values-v23.xml",
+                    "source": "/Users/worcestertech/.gradle/caches/transforms-3/972468a0041fac0e826e54ca351051bc/transformed/cardview-1.0.0/res/values-v23/values-v23.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -23,7 +23,7 @@
                     }
                 },
                 {
-                    "source": "/Users/jack/.gradle/caches/transforms-3/760495a2e1a0778cf6f785e9cbd6cf74/transformed/appcompat-1.1.0/res/values-v23/values-v23.xml",
+                    "source": "/Users/worcestertech/.gradle/caches/transforms-3/b3b6cbd4483f05c57c07f1bfa2e23a18/transformed/appcompat-1.1.0/res/values-v23/values-v23.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,20,34,35,36,37,41,42,43,44",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -34,7 +34,7 @@
                     }
                 },
                 {
-                    "source": "/Users/jack/.gradle/caches/transforms-3/54f9e15797f0b274e83681e7e617da2a/transformed/material-1.2.1/res/values-v23/values-v23.xml",
+                    "source": "/Users/worcestertech/.gradle/caches/transforms-3/ad9203abd1882fb7e43b5bc158afaa6f/transformed/material-1.2.1/res/values-v23/values-v23.xml",
                     "from": {
                         "startLines": "2,6",
                         "startColumns": "4,4",
@@ -55,10 +55,10 @@
             ]
         },
         {
-            "outputFile": "/Users/jack/IdeaProjects/GraphicsLingoGen2/build/intermediates/res/merged/release/values-v23/values-v23.xml",
+            "outputFile": "/Users/worcestertech/Documents/KonanGraphicsLanguage/build/intermediates/incremental/mergeReleaseResources/merged.dir/values-v23/values-v23.xml",
             "map": [
                 {
-                    "source": "/Users/jack/.gradle/caches/transforms-3/7742f4d273ef80febe13eb0619070818/transformed/cardview-1.0.0/res/values-v23/values-v23.xml",
+                    "source": "/Users/worcestertech/.gradle/caches/transforms-3/972468a0041fac0e826e54ca351051bc/transformed/cardview-1.0.0/res/values-v23/values-v23.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -77,7 +77,7 @@
                     }
                 },
                 {
-                    "source": "/Users/jack/.gradle/caches/transforms-3/760495a2e1a0778cf6f785e9cbd6cf74/transformed/appcompat-1.1.0/res/values-v23/values-v23.xml",
+                    "source": "/Users/worcestertech/.gradle/caches/transforms-3/b3b6cbd4483f05c57c07f1bfa2e23a18/transformed/appcompat-1.1.0/res/values-v23/values-v23.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,20,34,35,36,37,41,42,43,44",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -88,7 +88,7 @@
                     }
                 },
                 {
-                    "source": "/Users/jack/.gradle/caches/transforms-3/54f9e15797f0b274e83681e7e617da2a/transformed/material-1.2.1/res/values-v23/values-v23.xml",
+                    "source": "/Users/worcestertech/.gradle/caches/transforms-3/ad9203abd1882fb7e43b5bc158afaa6f/transformed/material-1.2.1/res/values-v23/values-v23.xml",
                     "from": {
                         "startLines": "2,6",
                         "startColumns": "4,4",

@@ -1,25 +1,25 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /Users/jack/IdeaProjects/GraphicsLingoGen2/src/androidMain/AndroidManifest.xml:2:1-97
-INJECTED from /Users/jack/IdeaProjects/GraphicsLingoGen2/src/androidMain/AndroidManifest.xml:2:1-97
-INJECTED from /Users/jack/IdeaProjects/GraphicsLingoGen2/src/androidMain/AndroidManifest.xml:2:1-97
+ADDED from /Users/worcestertech/Documents/KonanGraphicsLanguage/src/androidMain/AndroidManifest.xml:2:1-111
+INJECTED from /Users/worcestertech/Documents/KonanGraphicsLanguage/src/androidMain/AndroidManifest.xml:2:1-111
+INJECTED from /Users/worcestertech/Documents/KonanGraphicsLanguage/src/androidMain/AndroidManifest.xml:2:1-111
 	package
-		ADDED from /Users/jack/IdeaProjects/GraphicsLingoGen2/src/androidMain/AndroidManifest.xml:2:70-95
-		INJECTED from /Users/jack/IdeaProjects/GraphicsLingoGen2/src/androidMain/AndroidManifest.xml
-		INJECTED from /Users/jack/IdeaProjects/GraphicsLingoGen2/src/androidMain/AndroidManifest.xml
+		ADDED from /Users/worcestertech/Documents/KonanGraphicsLanguage/src/androidMain/AndroidManifest.xml:2:70-109
+		INJECTED from /Users/worcestertech/Documents/KonanGraphicsLanguage/src/androidMain/AndroidManifest.xml
+		INJECTED from /Users/worcestertech/Documents/KonanGraphicsLanguage/src/androidMain/AndroidManifest.xml
 	xmlns:android
-		ADDED from /Users/jack/IdeaProjects/GraphicsLingoGen2/src/androidMain/AndroidManifest.xml:2:11-69
+		ADDED from /Users/worcestertech/Documents/KonanGraphicsLanguage/src/androidMain/AndroidManifest.xml:2:11-69
 uses-sdk
-INJECTED from /Users/jack/IdeaProjects/GraphicsLingoGen2/src/androidMain/AndroidManifest.xml reason: use-sdk injection requested
-INJECTED from /Users/jack/IdeaProjects/GraphicsLingoGen2/src/androidMain/AndroidManifest.xml
-INJECTED from /Users/jack/IdeaProjects/GraphicsLingoGen2/src/androidMain/AndroidManifest.xml
-INJECTED from /Users/jack/IdeaProjects/GraphicsLingoGen2/src/androidMain/AndroidManifest.xml
-INJECTED from /Users/jack/IdeaProjects/GraphicsLingoGen2/src/androidMain/AndroidManifest.xml
+INJECTED from /Users/worcestertech/Documents/KonanGraphicsLanguage/src/androidMain/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/worcestertech/Documents/KonanGraphicsLanguage/src/androidMain/AndroidManifest.xml
+INJECTED from /Users/worcestertech/Documents/KonanGraphicsLanguage/src/androidMain/AndroidManifest.xml
+INJECTED from /Users/worcestertech/Documents/KonanGraphicsLanguage/src/androidMain/AndroidManifest.xml
+INJECTED from /Users/worcestertech/Documents/KonanGraphicsLanguage/src/androidMain/AndroidManifest.xml
 	android:targetSdkVersion
-		INJECTED from /Users/jack/IdeaProjects/GraphicsLingoGen2/src/androidMain/AndroidManifest.xml
-		ADDED from /Users/jack/IdeaProjects/GraphicsLingoGen2/src/androidMain/AndroidManifest.xml
-		INJECTED from /Users/jack/IdeaProjects/GraphicsLingoGen2/src/androidMain/AndroidManifest.xml
+		INJECTED from /Users/worcestertech/Documents/KonanGraphicsLanguage/src/androidMain/AndroidManifest.xml
+		ADDED from /Users/worcestertech/Documents/KonanGraphicsLanguage/src/androidMain/AndroidManifest.xml
+		INJECTED from /Users/worcestertech/Documents/KonanGraphicsLanguage/src/androidMain/AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from /Users/jack/IdeaProjects/GraphicsLingoGen2/src/androidMain/AndroidManifest.xml
-		ADDED from /Users/jack/IdeaProjects/GraphicsLingoGen2/src/androidMain/AndroidManifest.xml
-		INJECTED from /Users/jack/IdeaProjects/GraphicsLingoGen2/src/androidMain/AndroidManifest.xml
+		INJECTED from /Users/worcestertech/Documents/KonanGraphicsLanguage/src/androidMain/AndroidManifest.xml
+		ADDED from /Users/worcestertech/Documents/KonanGraphicsLanguage/src/androidMain/AndroidManifest.xml
+		INJECTED from /Users/worcestertech/Documents/KonanGraphicsLanguage/src/androidMain/AndroidManifest.xml

@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/jack/IdeaProjects/GraphicsLingoGen2/build/intermediates/incremental/mergeReleaseResources/merged.dir/values-v22/values-v22.xml",
+            "outputFile": "/Users/worcestertech/Documents/KonanGraphicsLanguage/build/intermediates/res/merged/release/values-v22/values-v22.xml",
             "map": [
                 {
-                    "source": "/Users/jack/.gradle/caches/transforms-3/760495a2e1a0778cf6f785e9cbd6cf74/transformed/appcompat-1.1.0/res/values-v22/values-v22.xml",
+                    "source": "/Users/worcestertech/.gradle/caches/transforms-3/b3b6cbd4483f05c57c07f1bfa2e23a18/transformed/appcompat-1.1.0/res/values-v22/values-v22.xml",
                     "from": {
                         "startLines": "2,3,4,9",
                         "startColumns": "4,4,4,4",
@@ -17,10 +17,10 @@
             ]
         },
         {
-            "outputFile": "/Users/jack/IdeaProjects/GraphicsLingoGen2/build/intermediates/res/merged/release/values-v22/values-v22.xml",
+            "outputFile": "/Users/worcestertech/Documents/KonanGraphicsLanguage/build/intermediates/incremental/mergeReleaseResources/merged.dir/values-v22/values-v22.xml",
             "map": [
                 {
-                    "source": "/Users/jack/.gradle/caches/transforms-3/760495a2e1a0778cf6f785e9cbd6cf74/transformed/appcompat-1.1.0/res/values-v22/values-v22.xml",
+                    "source": "/Users/worcestertech/.gradle/caches/transforms-3/b3b6cbd4483f05c57c07f1bfa2e23a18/transformed/appcompat-1.1.0/res/values-v22/values-v22.xml",
                     "from": {
                         "startLines": "2,3,4,9",
                         "startColumns": "4,4,4,4",

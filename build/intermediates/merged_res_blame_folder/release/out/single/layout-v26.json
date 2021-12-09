@@ -1,10 +1,10 @@
 [
     {
-        "merged": "/Users/jack/IdeaProjects/GraphicsLingoGen2/build/intermediates/res/merged/release/layout-v26/mtrl_calendar_month.xml",
-        "source": "/Users/jack/.gradle/caches/transforms-3/54f9e15797f0b274e83681e7e617da2a/transformed/material-1.2.1/res/layout-v26/mtrl_calendar_month.xml"
+        "merged": "/Users/worcestertech/Documents/KonanGraphicsLanguage/build/intermediates/res/merged/release/layout-v26/abc_screen_toolbar.xml",
+        "source": "/Users/worcestertech/.gradle/caches/transforms-3/b3b6cbd4483f05c57c07f1bfa2e23a18/transformed/appcompat-1.1.0/res/layout-v26/abc_screen_toolbar.xml"
     },
     {
-        "merged": "/Users/jack/IdeaProjects/GraphicsLingoGen2/build/intermediates/res/merged/release/layout-v26/abc_screen_toolbar.xml",
-        "source": "/Users/jack/.gradle/caches/transforms-3/760495a2e1a0778cf6f785e9cbd6cf74/transformed/appcompat-1.1.0/res/layout-v26/abc_screen_toolbar.xml"
+        "merged": "/Users/worcestertech/Documents/KonanGraphicsLanguage/build/intermediates/res/merged/release/layout-v26/mtrl_calendar_month.xml",
+        "source": "/Users/worcestertech/.gradle/caches/transforms-3/ad9203abd1882fb7e43b5bc158afaa6f/transformed/material-1.2.1/res/layout-v26/mtrl_calendar_month.xml"
     }
 ]
