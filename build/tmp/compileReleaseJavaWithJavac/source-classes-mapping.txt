@@ -1,2 +1,0 @@
-dev/jackrichard/konangraphics/BuildConfig.java
- dev.jackrichard.konangraphics.BuildConfig

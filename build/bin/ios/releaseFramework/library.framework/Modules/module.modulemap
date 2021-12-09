@@ -1,6 +1,0 @@
-framework module library {
-    umbrella header "library.h"
-
-    export *
-    module * { export * }
-}
