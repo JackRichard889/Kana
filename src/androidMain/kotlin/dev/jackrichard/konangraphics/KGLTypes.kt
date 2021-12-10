@@ -1,6 +1,9 @@
 package dev.jackrichard.konangraphics
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.opengl.GLES20
+import dev.jackrichard.konangraphics.specifics.GLESMesh
 import javax.microedition.khronos.opengles.GL10
 
 actual class KGLContext {
@@ -22,14 +25,21 @@ actual class KGLContext {
     }
 }
 
-actual object KGLGlobals
+@SuppressLint("StaticFieldLeak")
+actual object KGLGlobals {
+    lateinit var context: Context
+}
 
 actual class KGLTexture actual constructor(source: KGLAsset) {
     // private lateinit var raw:
 }
 
 actual class KGLModel actual constructor(source: KGLAsset) {
-    // TODO: implement models for Android
+    private var raw: GLESMesh
+
+    init {
+        raw = GLESMesh(KGLGlobals.context, "${source.name}.${source.extension}")
+    }
 }
 
 actual class KGLFont actual constructor(source: KGLAsset) {

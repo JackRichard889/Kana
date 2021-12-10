@@ -12,6 +12,7 @@ buildscript {
 plugins {
     kotlin("multiplatform") version "1.6.0"
     id("com.android.library")
+    id("maven-publish")
 }
 
 group = "dev.jackrichard"
@@ -62,7 +63,9 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 }
+
 dependencies {
     implementation("androidx.core:core-ktx:+")
+    implementation("org.reflections:reflections:+")
     implementation(kotlin("stdlib-jdk7", kotlin_version))
 }

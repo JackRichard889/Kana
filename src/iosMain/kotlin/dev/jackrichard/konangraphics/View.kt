@@ -1,6 +1,7 @@
 package dev.jackrichard.konangraphics
 
 import kotlinx.cinterop.CValue
+import kotlinx.cinterop.useContents
 import platform.CoreGraphics.CGSize
 import platform.Foundation.NSCoder
 import platform.Metal.MTLClearColorMake
@@ -13,7 +14,7 @@ import platform.UIKit.UIViewController
 import platform.UIKit.addSubview
 import platform.darwin.NSObject
 
-actual class KGLView @OverrideInit constructor(coder: NSCoder) : UIViewController(coder) {
+actual class KGLView constructor(coder: NSCoder, private val delegate: KGLDelegate) : UIViewController(coder) {
     override fun viewDidLoad() {
         super.viewDidLoad()
 
@@ -23,7 +24,8 @@ actual class KGLView @OverrideInit constructor(coder: NSCoder) : UIViewControlle
         KGLGlobals.device = device
 
         view.device = device
-        view.delegate = KGLMetalProtocolDelegate()
+        view.delegate = KGLMetalProtocolDelegate(delegate)
+
         view.clearColor = MTLClearColorMake(1.0, 1.0, 1.0, 1.0)
         view.colorPixelFormat = MTLPixelFormatBGRA8Unorm_sRGB
         view.depthStencilPixelFormat = MTLPixelFormatDepth32Float
@@ -32,17 +34,21 @@ actual class KGLView @OverrideInit constructor(coder: NSCoder) : UIViewControlle
     }
 }
 
-class KGLMetalProtocolDelegate : NSObject, MTKViewDelegateProtocol {
-    constructor() {
-
+class KGLMetalProtocolDelegate(private val delegate: KGLDelegate) : NSObject(), MTKViewDelegateProtocol {
+    init {
+        delegate.onInitialized()
     }
 
     override fun drawInMTKView(view: MTKView) {
+        val context = KGLContext()
+        context.delegateView = view
 
-        TODO("Not yet implemented")
+        delegate.onDrawFrame(context)
     }
 
     override fun mtkView(view: MTKView, drawableSizeWillChange: CValue<CGSize>) {
-        TODO("Not yet implemented")
+        drawableSizeWillChange.useContents {
+            delegate.onScreenResizes(this.width.toInt() to this.height.toInt())
+        }
     }
 }
