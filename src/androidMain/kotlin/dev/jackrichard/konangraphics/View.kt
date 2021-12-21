@@ -8,7 +8,7 @@ import org.reflections.Reflections
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
-actual class KGLView : Activity() {
+actual open class KGLView : Activity() {
     lateinit var glView: GLSurfaceView
 
     override fun onCreate(savedInstanceState: Bundle?) {

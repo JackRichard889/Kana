@@ -11,14 +11,15 @@ import platform.ModelIO.MDLAsset
 actual class KGLContext {
     lateinit var delegateView: MTKView
 
-    actual fun compileShader(source: String, name: String, type: KGLShaderType) : KGLShader {
+    actual fun compileShader(init: KGLShader.() -> Unit): KGLShader {
         val shader = KGLShader()
-        shader.shader = delegateView.device!!
+        shader.init()
+        shader.compiledSource.shader = delegateView.device!!
             .newLibraryWithSource(
-                source,
+                shader.source,
                 null,
                 error = null)!!
-            .newFunctionWithName(name)!!
+            .newFunctionWithName(shader.name)!!
         return shader
     }
 }
@@ -57,10 +58,6 @@ actual class KGLModel actual constructor(source: KGLAsset) {
     }
 }
 
-actual class KGLFont actual constructor(source: KGLAsset) {
-    // TODO: implement fonts for iOS
-}
-
-actual class KGLShader {
+actual class KGLShaderSource {
     lateinit var shader: MTLFunctionProtocol
 }

@@ -14,7 +14,7 @@ import platform.UIKit.UIViewController
 import platform.UIKit.addSubview
 import platform.darwin.NSObject
 
-actual class KGLView constructor(coder: NSCoder, private val delegate: KGLDelegate) : UIViewController(coder) {
+actual open class KGLView constructor(coder: NSCoder, private val delegate: KGLDelegate) : UIViewController(coder) {
     override fun viewDidLoad() {
         super.viewDidLoad()
 

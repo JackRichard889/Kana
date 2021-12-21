@@ -8,4 +8,4 @@ interface KGLDelegate {
     fun onDrawFrame(controller: KGLContext)
 }
 
-expect class KGLView
+expect open class KGLView()
