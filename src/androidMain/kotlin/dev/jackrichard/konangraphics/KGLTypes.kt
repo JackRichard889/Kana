@@ -15,21 +15,25 @@ actual object KGLGlobals {
     lateinit var context: Context
 }
 
-actual class KGLTexture actual constructor(source: KGLAsset) {
-    // private lateinit var raw:
+actual class KGLTexture private constructor(name: String, ext: String) {
+    init {
+
+    }
+
+    actual companion object {
+        actual fun genNew(name: String, extension: String) = KGLTexture(name, extension)
+    }
 }
 
-actual class KGLModel actual constructor(source: KGLAsset) {
+/*actual class KGLModel actual constructor(source: KGLAsset) {
     private var raw: GLESMesh
 
     init {
         raw = GLESMesh(KGLGlobals.context, "${source.name}.${source.extension}")
     }
-}
+}*/
 
-actual class KGLShaderSource {
-    var shader: Int = 0
-}
+actual class KGLShaderSource { var shader: Int = 0 }
 
 actual class KGLPipeline private actual constructor() {
     private var program: Int = 0

@@ -18,13 +18,13 @@ actual object KGLGlobals {
     lateinit var device: MTLDeviceProtocol
 }
 
-actual class KGLTexture actual constructor(source: KGLAsset) {
-    private lateinit var raw: MTLTextureProtocol
+actual class KGLTexture private constructor(name: String, ext: String) {
+    private lateinit var texture: MTLTextureProtocol
 
     init {
         val loader = MTKTextureLoader(device = KGLGlobals.device)
         loader.newTextureWithName(
-            source.name + "." + source.extension,
+            "$name.$ext",
             scaleFactor = 1.0,
             bundle = null,
             options = mapOf(
@@ -32,12 +32,16 @@ actual class KGLTexture actual constructor(source: KGLAsset) {
                 MTKTextureLoaderOptionSRGB to true
             )
         ) { mtlTextureProtocol: MTLTextureProtocol?, _: NSError? ->
-            raw = mtlTextureProtocol!!
+            texture = mtlTextureProtocol!!
         }
+    }
+
+    actual companion object {
+        actual fun genNew(name: String, extension: String) : KGLTexture = KGLTexture(name, extension)
     }
 }
 
-actual class KGLModel actual constructor(source: KGLAsset) {
+/*actual class KGLModel actual constructor(source: KGLAsset) {
     private var raw: MTKMesh
 
     init {
@@ -45,11 +49,9 @@ actual class KGLModel actual constructor(source: KGLAsset) {
         val asset = MDLAsset(uRL = file, vertexDescriptor = null, bufferAllocator = null)
         raw = (MTKMesh.newMeshesFromAsset(asset, KGLGlobals.device, null, null)?.get(1) as List<MTKMesh>).first()
     }
-}
+}*/
 
-actual class KGLShaderSource {
-    lateinit var shader: MTLFunctionProtocol
-}
+actual class KGLShaderSource { lateinit var shader: MTLFunctionProtocol }
 
 actual class KGLPipeline private actual constructor() {
     lateinit var pipeline: MTLRenderPipelineDescriptor

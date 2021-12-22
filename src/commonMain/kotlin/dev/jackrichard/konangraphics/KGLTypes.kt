@@ -6,12 +6,10 @@ expect class KGLContext {
 
 expect object KGLGlobals
 
-expect class KGLTexture(source: KGLAsset)
-expect class KGLModel(source: KGLAsset)
-
-class KGLAsset (val name: String, val extension: String) {
-    fun asTexture() : KGLTexture = KGLTexture(this)
-    fun asModel() : KGLModel = KGLModel(this)
+expect class KGLTexture {
+    companion object {
+        fun genNew(name: String, extension: String) : KGLTexture
+    }
 }
 
 expect class KGLPipeline private constructor() {
