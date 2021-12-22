@@ -4,24 +4,14 @@ import platform.Foundation.NSBundle
 import platform.Foundation.NSError
 import platform.Metal.MTLDeviceProtocol
 import platform.Metal.MTLFunctionProtocol
+import platform.Metal.MTLRenderPipelineDescriptor
 import platform.Metal.MTLTextureProtocol
 import platform.MetalKit.*
 import platform.ModelIO.MDLAsset
+import platform.posix.pipe
 
 actual class KGLContext {
     lateinit var delegateView: MTKView
-
-    actual fun compileShader(init: KGLShader.() -> Unit): KGLShader {
-        val shader = KGLShader()
-        shader.init()
-        shader.compiledSource.shader = delegateView.device!!
-            .newLibraryWithSource(
-                shader.source,
-                null,
-                error = null)!!
-            .newFunctionWithName(shader.name)!!
-        return shader
-    }
 }
 
 @ThreadLocal
@@ -60,4 +50,39 @@ actual class KGLModel actual constructor(source: KGLAsset) {
 
 actual class KGLShaderSource {
     lateinit var shader: MTLFunctionProtocol
+}
+
+actual class KGLPipeline private actual constructor() {
+    lateinit var pipeline: MTLRenderPipelineDescriptor
+
+    actual companion object {
+        actual fun initNew(): KGLPipeline {
+            return KGLPipeline().apply {
+                pipeline = MTLRenderPipelineDescriptor()
+            }
+        }
+    }
+
+    actual fun setVertexFunction(shader: KGLShader?) { if (shader != null) { pipeline.setVertexFunction(shader.compiledSource.shader) } }
+    actual fun setFragmentFunction(shader: KGLShader?) { if (shader != null) { pipeline.setFragmentFunction(shader.compiledSource.shader) } }
+
+}
+
+actual class KGLShader private actual constructor(val platform: KGLPlatform, val source: String, val type: KGLShaderType, val name: String) {
+
+    actual var compiledSource: KGLShaderSource = KGLShaderSource().apply {
+        shader = KGLGlobals.device
+            .newLibraryWithSource(source, null, error = null)!!
+            .newFunctionWithName(shader.name)!!
+    }
+
+    actual companion object {
+        actual fun compileShader(
+            platform: KGLPlatform,
+            type: KGLShaderType,
+            name: String,
+            source: String
+        ): KGLShader? = if (platform == KGLPlatform.IOS) KGLShader(platform, source, type, name) else null
+    }
+
 }

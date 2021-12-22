@@ -66,6 +66,5 @@ android {
 
 dependencies {
     implementation("androidx.core:core-ktx:+")
-    implementation("org.reflections:reflections:+")
     implementation(kotlin("stdlib-jdk7", kotlin_version))
 }

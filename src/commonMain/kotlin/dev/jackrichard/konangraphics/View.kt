@@ -1,10 +1,8 @@
 package dev.jackrichard.konangraphics
 
-annotation class KGLMainView
-
-interface KGLDelegate {
+interface KGLRenderer {
     fun onInitialized()
-    fun onScreenResizes(size: Pair<Int, Int>)
+    fun onScreenSized(size: Pair<Int, Int>)
     fun onDrawFrame(controller: KGLContext)
 }
 

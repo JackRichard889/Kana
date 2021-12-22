@@ -14,7 +14,7 @@ import platform.UIKit.UIViewController
 import platform.UIKit.addSubview
 import platform.darwin.NSObject
 
-actual open class KGLView constructor(coder: NSCoder, private val delegate: KGLDelegate) : UIViewController(coder) {
+actual open class KGLView constructor(coder: NSCoder, private val delegate: KGLRenderer) : UIViewController(coder) {
     override fun viewDidLoad() {
         super.viewDidLoad()
 
@@ -34,7 +34,7 @@ actual open class KGLView constructor(coder: NSCoder, private val delegate: KGLD
     }
 }
 
-class KGLMetalProtocolDelegate(private val delegate: KGLDelegate) : NSObject(), MTKViewDelegateProtocol {
+class KGLMetalProtocolDelegate(private val delegate: KGLRenderer) : NSObject(), MTKViewDelegateProtocol {
     init {
         delegate.onInitialized()
     }
@@ -48,7 +48,7 @@ class KGLMetalProtocolDelegate(private val delegate: KGLDelegate) : NSObject(), 
 
     override fun mtkView(view: MTKView, drawableSizeWillChange: CValue<CGSize>) {
         drawableSizeWillChange.useContents {
-            delegate.onScreenResizes(this.width.toInt() to this.height.toInt())
+            delegate.onScreenSized(this.width.toInt() to this.height.toInt())
         }
     }
 }

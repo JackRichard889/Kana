@@ -18,13 +18,13 @@ actual open class KGLView : Activity() {
 
         KGLGlobals.context = this
 
-        val mainDelegate: KGLDelegate = Reflections().getTypesAnnotatedWith(KGLMainView::class.java)!!.first() as KGLDelegate
+        val mainDelegate: KGLRenderer = Reflections().getTypesAnnotatedWith(KGLMainView::class.java)!!.first() as KGLRenderer
         glView.setRenderer(KGLGLESProtocolDelegate(this, mainDelegate))
         this.setContentView(glView)
     }
 }
 
-class KGLGLESProtocolDelegate(val context: Context, private val delegate: KGLDelegate) : GLSurfaceView.Renderer {
+class KGLGLESProtocolDelegate(val context: Context, private val delegate: KGLRenderer) : GLSurfaceView.Renderer {
     override fun onSurfaceCreated(gl: GL10?, config: EGLConfig?) {
         gl!!.glClearColor(1.0f, 1.0f, 1.0f, 1.0f)
 
@@ -39,7 +39,7 @@ class KGLGLESProtocolDelegate(val context: Context, private val delegate: KGLDel
     }
 
     override fun onSurfaceChanged(gl: GL10?, width: Int, height: Int) {
-        delegate.onScreenResizes(width to height)
+        delegate.onScreenSized(width to height)
     }
 
     override fun onDrawFrame(gl: GL10?) {
