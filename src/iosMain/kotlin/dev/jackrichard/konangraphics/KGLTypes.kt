@@ -8,7 +8,6 @@ import platform.Metal.MTLRenderPipelineDescriptor
 import platform.Metal.MTLTextureProtocol
 import platform.MetalKit.*
 import platform.ModelIO.MDLAsset
-import platform.posix.pipe
 
 actual class KGLContext {
     lateinit var delegateView: MTKView
