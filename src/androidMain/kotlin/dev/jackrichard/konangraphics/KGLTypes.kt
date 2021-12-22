@@ -2,7 +2,6 @@ package dev.jackrichard.konangraphics
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.opengl.GLES20
 import android.opengl.GLES32
 import dev.jackrichard.konangraphics.specifics.GLESMesh
 import javax.microedition.khronos.opengles.GL10
@@ -49,15 +48,15 @@ actual class KGLPipeline private actual constructor() {
 actual class KGLShader private actual constructor(val platform: KGLPlatform, val source: String, val type: KGLShaderType, val name: String) {
 
     actual var compiledSource: KGLShaderSource = KGLShaderSource().apply {
-        shader = GLES20.glCreateShader(
+        shader = GLES32.glCreateShader(
             when (type) {
-                KGLShaderType.FRAGMENT -> GLES20.GL_FRAGMENT_SHADER
-                KGLShaderType.VERTEX -> GLES20.GL_VERTEX_SHADER
+                KGLShaderType.FRAGMENT -> GLES32.GL_FRAGMENT_SHADER
+                KGLShaderType.VERTEX -> GLES32.GL_VERTEX_SHADER
                 else -> 0
             }
         ).also { shader1 ->
-            GLES20.glShaderSource(shader1, source)
-            GLES20.glCompileShader(shader1)
+            GLES32.glShaderSource(shader1, source)
+            GLES32.glCompileShader(shader1)
         }
     }
 
