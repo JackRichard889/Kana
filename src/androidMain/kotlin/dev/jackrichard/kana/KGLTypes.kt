@@ -14,7 +14,11 @@ actual class KanaContext {
     }
 
     actual class KanaCommandBuffer internal constructor() {
-
+        private var pipeline: KanaPipeline? = null
+        actual fun linkPipeline(pipeline: KanaPipeline) {
+            // TODO: implement with platform specific code
+            this.pipeline = pipeline
+        }
     }
 }
 

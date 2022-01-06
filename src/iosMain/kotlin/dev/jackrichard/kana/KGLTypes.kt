@@ -30,7 +30,15 @@ actual class KanaContext {
     actual class KanaCommandBuffer internal constructor(
         private val renderEncoder: MTLRenderCommandEncoderProtocol
     ) {
-
+        private var pipelineState: MTLRenderPipelineStateProtocol? = null
+        actual fun linkPipeline(pipeline: KanaPipeline) {
+            KanaGlobals.device.newRenderPipelineStateWithDescriptor(pipeline.pipeline) { mtlRenderPipelineStateProtocol: MTLRenderPipelineStateProtocol?, nsError: NSError? ->
+                if (nsError != null) {
+                    throw Exception("Could not create pipeline state!\n${nsError.localizedDescription}")
+                }
+                this.pipelineState = mtlRenderPipelineStateProtocol
+            }
+        }
     }
 }
 

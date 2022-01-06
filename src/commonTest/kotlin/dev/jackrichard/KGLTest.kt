@@ -23,7 +23,7 @@ class FirstView : KanaRenderer {
 
     override fun onDrawFrame(context: KanaContext) {
         context.queueUp {
-
+            linkPipeline(pipeline)
         }
     }
 }

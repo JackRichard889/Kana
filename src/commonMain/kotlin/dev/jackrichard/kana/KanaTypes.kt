@@ -2,7 +2,9 @@ package dev.jackrichard.kana
 
 expect class KanaContext {
     fun queueUp(func: KanaCommandBuffer.() -> Unit)
-    class KanaCommandBuffer
+    class KanaCommandBuffer {
+        fun linkPipeline(pipeline: KanaPipeline)
+    }
 }
 
 expect object KanaGlobals
