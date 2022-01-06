@@ -1,4 +1,4 @@
-package dev.jackrichard.konangraphics
+package dev.jackrichard.kana
 
 import kotlinx.cinterop.CValue
 import kotlinx.cinterop.useContents
@@ -14,14 +14,15 @@ import platform.UIKit.UIViewController
 import platform.UIKit.addSubview
 import platform.darwin.NSObject
 
-actual open class KGLView constructor(coder: NSCoder, private val delegate: KGLRenderer) : UIViewController(coder) {
+actual open class KanaView constructor(coder: NSCoder, private val delegate: KanaRenderer) : UIViewController(coder) {
     override fun viewDidLoad() {
         super.viewDidLoad()
 
         val view = MTKView()
         val device = MTLCreateSystemDefaultDevice()!!
 
-        KGLGlobals.device = device
+        KanaGlobals.device = device
+        KanaGlobals.commandQueue = device.newCommandQueue()!!
 
         view.device = device
         view.delegate = KGLMetalProtocolDelegate(delegate)
@@ -34,13 +35,13 @@ actual open class KGLView constructor(coder: NSCoder, private val delegate: KGLR
     }
 }
 
-class KGLMetalProtocolDelegate(private val delegate: KGLRenderer) : NSObject(), MTKViewDelegateProtocol {
+class KGLMetalProtocolDelegate(private val delegate: KanaRenderer) : NSObject(), MTKViewDelegateProtocol {
     init {
         delegate.onInitialized()
     }
 
     override fun drawInMTKView(view: MTKView) {
-        val context = KGLContext()
+        val context = KanaContext()
         context.delegateView = view
 
         delegate.onDrawFrame(context)

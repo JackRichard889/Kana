@@ -15,8 +15,8 @@ plugins {
     id("maven-publish")
 }
 
-group = "dev.jackrichard"
-version = "1.0-ALPHA"
+group = "dev.jackrichard.kana"
+version = "0.1-ALPHA"
 
 repositories {
     google()
@@ -29,7 +29,7 @@ kotlin {
     iosX64("ios") {
         binaries {
             framework {
-                baseName = "library"
+                baseName = "Kana"
             }
         }
     }

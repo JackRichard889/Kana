@@ -1,14 +1,13 @@
-package dev.jackrichard.konangraphics
+package dev.jackrichard.kana
 
 import android.app.Activity
 import android.content.Context
 import android.opengl.GLSurfaceView
 import android.os.Bundle
-import org.reflections.Reflections
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
-actual open class KGLView : Activity() {
+actual open class KanaView(private val renderer: KanaRenderer) : Activity() {
     lateinit var glView: GLSurfaceView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,15 +15,13 @@ actual open class KGLView : Activity() {
 
         glView = GLSurfaceView(this)
 
-        KGLGlobals.context = this
-
-        val mainDelegate: KGLRenderer = Reflections().getTypesAnnotatedWith(KGLMainView::class.java)!!.first() as KGLRenderer
-        glView.setRenderer(KGLGLESProtocolDelegate(this, mainDelegate))
+        KanaGlobals.context = this
+        glView.setRenderer(KGLGLESProtocolDelegate(this, renderer))
         this.setContentView(glView)
     }
 }
 
-class KGLGLESProtocolDelegate(val context: Context, private val delegate: KGLRenderer) : GLSurfaceView.Renderer {
+class KGLGLESProtocolDelegate(val context: Context, private val delegate: KanaRenderer) : GLSurfaceView.Renderer {
     override fun onSurfaceCreated(gl: GL10?, config: EGLConfig?) {
         gl!!.glClearColor(1.0f, 1.0f, 1.0f, 1.0f)
 
@@ -43,7 +40,7 @@ class KGLGLESProtocolDelegate(val context: Context, private val delegate: KGLRen
     }
 
     override fun onDrawFrame(gl: GL10?) {
-        val context = KGLContext()
+        val context = KanaContext()
         context.delegateView = gl!!
 
         delegate.onDrawFrame(context)

@@ -1,7 +1,6 @@
-package dev.jackrichard.konangraphics
+package dev.jackrichard.kana
 
 import kotlin.test.Test
-import kotlin.test.assertTrue
 
 class IosGreetingTest {
 

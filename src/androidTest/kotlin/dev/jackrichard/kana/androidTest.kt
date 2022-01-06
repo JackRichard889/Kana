@@ -1,6 +1,5 @@
-package dev.jackrichard.konangraphics
+package dev.jackrichard.kana
 
-import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class AndroidGreetingTest {

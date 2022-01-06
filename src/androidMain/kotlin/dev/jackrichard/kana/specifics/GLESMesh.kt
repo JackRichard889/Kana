@@ -1,4 +1,4 @@
-package dev.jackrichard.konangraphics.specifics
+package dev.jackrichard.kana.specifics
 
 import android.content.Context
 import java.io.BufferedReader
