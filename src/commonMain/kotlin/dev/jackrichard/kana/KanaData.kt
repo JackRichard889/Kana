@@ -1,20 +1,24 @@
 package dev.jackrichard.kana
 
+import kotlin.reflect.KClass
+
+open class KanaShaderDataType
+
 /*
     Vector
  */
 fun vec2(a: Float, b: Float) = Vec2(a, b)
-class Vec2 internal constructor(val a: Float, val b: Float) {
+class Vec2 internal constructor(val a: Float, val b: Float) : KanaShaderDataType() {
     operator fun plus(c: Float) : Vec3 = Vec3(a, b, c)
     operator fun plus(cd: Vec2) : Vec4 = Vec4(a, b, cd.a, cd.b)
 }
 
 fun vec3(a: Float, b: Float, c: Float) = Vec3(a, b, c)
-class Vec3 internal constructor(val a: Float, val b: Float, val c: Float) { operator fun plus(d: Float) : Vec4 = Vec4(a, b, c, d) }
+class Vec3 internal constructor(val a: Float, val b: Float, val c: Float) : KanaShaderDataType() { operator fun plus(d: Float) : Vec4 = Vec4(a, b, c, d) }
 operator fun Float.plus(b: Vec2) = Vec3(this, b.a, b.b)
 
 fun vec4(a: Float, b: Float, c: Float, d: Float) = Vec4(a, b, c, d)
-class Vec4 internal constructor(val a: Float, val b: Float, val c: Float, val d: Float)
+class Vec4 internal constructor(val a: Float, val b: Float, val c: Float, val d: Float) : KanaShaderDataType()
 operator fun Float.plus(b: Vec3) = Vec4(this, b.a, b.b, b.c)
 
 
@@ -103,13 +107,20 @@ class Mat4 internal constructor(
     Descriptors
  */
 
+class VertexDescriptorElement(t: KClass<*>) {
+    companion object {
+        inline fun <reified T : KanaShaderDataType> createNew() : VertexDescriptorElement = VertexDescriptorElement(T::class)
+    }
+
+    val type: KClass<*> = t
+}
+
 class VertexDescriptor {
-    infix fun mat2x2(name: String) { }
-    infix fun mat3x3(name: String) { }
-    infix fun mat4x4(name: String) { }
-    infix fun vec2(name: String) { }
-    infix fun vec3(name: String) { }
-    infix fun vec4(name: String) { }
+    internal val elements: MutableList<VertexDescriptorElement> = mutableListOf()
+
+    infix fun vec2(name: String) = elements.add(VertexDescriptorElement.createNew<Vec2>())
+    infix fun vec3(name: String) = elements.add(VertexDescriptorElement.createNew<Vec3>())
+    infix fun vec4(name: String) = elements.add(VertexDescriptorElement.createNew<Vec4>())
 }
 
 fun defineDescriptor(block: VertexDescriptor.() -> Unit) : VertexDescriptor = VertexDescriptor().also(block)

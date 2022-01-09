@@ -22,6 +22,7 @@ expect class KanaPipeline private constructor() {
 
     fun setVertexFunction(shader: KanaShader?)
     fun setFragmentFunction(shader: KanaShader?)
+    fun setVertexDescriptor(descriptor: VertexDescriptor)
 }
 
 enum class KanaShaderType { FRAGMENT, VERTEX }

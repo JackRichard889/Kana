@@ -96,7 +96,21 @@ actual class KanaPipeline private actual constructor() {
 
     actual fun setVertexFunction(shader: KanaShader?) { if (shader != null) { pipeline.setVertexFunction(shader.compiledSource.shader) } }
     actual fun setFragmentFunction(shader: KanaShader?) { if (shader != null) { pipeline.setFragmentFunction(shader.compiledSource.shader) } }
-
+    actual fun setVertexDescriptor(descriptor: VertexDescriptor) {
+        val mtlDescriptor = MTLVertexDescriptor()
+        descriptor.elements
+            .zip(0 until descriptor.elements.size)
+            .forEach {
+                mtlDescriptor.attributes.objectAtIndexedSubscript(it.second.toULong()).format =
+                    when (it.first.type.simpleName) {
+                        "Vec2" -> MTLVertexFormatFloat2
+                        "Vec3" -> MTLVertexFormatFloat3
+                        "Vec4" -> MTLVertexFormatFloat4
+                        else -> throw Exception("Unknown data type: ${it.first.type.simpleName}!")
+                    }
+            }
+        pipeline.vertexDescriptor = mtlDescriptor
+    }
 }
 
 actual class KanaShader private actual constructor(val platform: KanaPlatform, val source: String, val type: KanaShaderType, val name: String) {

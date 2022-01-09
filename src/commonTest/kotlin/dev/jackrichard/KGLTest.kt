@@ -20,6 +20,8 @@ class FirstView : KanaRenderer {
         pipeline.setFragmentFunction(fragmentFunctioniOS)
         pipeline.setVertexFunction(vertexFunctionAnd)
         pipeline.setFragmentFunction(fragmentFunctionAnd)
+
+        pipeline.setVertexDescriptor(vertexDescriptor)
     }
 
     override fun onScreenSized(size: Pair<Int, Int>) {
