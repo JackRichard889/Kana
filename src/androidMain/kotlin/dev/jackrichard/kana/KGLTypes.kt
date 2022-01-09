@@ -58,7 +58,9 @@ actual class KanaPipeline private actual constructor() {
 
     actual fun setVertexFunction(shader: KanaShader?) { if (shader != null) { GLES32.glAttachShader(program, shader.compiledSource.shader) } }
     actual fun setFragmentFunction(shader: KanaShader?) { if (shader != null) { GLES32.glAttachShader(program, shader.compiledSource.shader) } }
+    actual fun setVertexDescriptor(descriptor: VertexDescriptor) {
 
+    }
 }
 
 actual class KanaShader private actual constructor(val platform: KanaPlatform, val source: String, val type: KanaShaderType, val name: String) {
