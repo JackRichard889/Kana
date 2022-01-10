@@ -7,13 +7,15 @@ import android.view.View
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
-actual class KanaView constructor(private val ctx: Context, private val renderer: KanaRenderer) : View(ctx) {
+actual class KanaView constructor(ctx: Context, renderer: KanaRenderer?) : View(ctx) {
     var glView: GLSurfaceView = GLSurfaceView(ctx)
+
+    constructor(ctx: Context) : this(ctx, null)
 
     init {
         glView.setEGLContextClientVersion(3)
         KanaGlobals.context = ctx
-        glView.setRenderer(KGLGLESProtocolDelegate(ctx, renderer))
+        glView.setRenderer(KGLGLESProtocolDelegate(ctx, renderer!!))
     }
 }
 
