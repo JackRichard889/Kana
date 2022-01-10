@@ -14,7 +14,7 @@ import platform.UIKit.UIViewController
 import platform.UIKit.addSubview
 import platform.darwin.NSObject
 
-actual open class KanaView constructor(coder: NSCoder, private val delegate: KanaRenderer) : UIViewController(coder) {
+actual final class KanaView constructor(coder: NSCoder, private val delegate: KanaRenderer) : UIViewController(coder) {
     override fun viewDidLoad() {
         super.viewDidLoad()
 

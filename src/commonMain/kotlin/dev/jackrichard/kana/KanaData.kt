@@ -92,6 +92,22 @@ class Mat4 internal constructor(
         (this.m * q.a) + (this.n * q.e) + (this.o * q.i) + (this.p * q.m), (this.m * q.b) + (this.n * q.f) + (this.o * q.j) + (this.p * q.n), (this.m * q.c) + (this.n * q.g) + (this.o * q.k) + (this.p * q.o), (this.m * q.d) + (this.n * q.h) + (this.o * q.l) + (this.p * q.p)
     )
 
+    fun translate(vec: Vec3) : Mat4 =
+        mat4(
+            a, b, c, vec.a + d,
+            e, f, g, vec.b + h,
+            i, j, k, vec.c + l,
+            m, n, o, p
+        )
+
+    fun scale(vec: Vec3) : Mat4 =
+        mat4(
+            vec.a * a, b, c, d,
+            e, vec.b * b, g, h,
+            i, j, vec.c * c, l,
+            m, n, o, p
+        )
+
     companion object {
         val identity: Mat4 = mat4(
             1F, 0F, 0F, 0F,
@@ -102,6 +118,8 @@ class Mat4 internal constructor(
     }
 }
 
+infix fun Number.v(n: Number) : Vec2 = vec2(this.toFloat(), n.toFloat())
+infix fun Vec2.v(n: Number) : Vec3 = vec3(this.a, this.b, n.toFloat())
 
 /*
     Descriptors

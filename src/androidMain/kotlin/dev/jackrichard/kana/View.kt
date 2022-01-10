@@ -1,25 +1,19 @@
 package dev.jackrichard.kana
 
-import android.app.Activity
 import android.content.Context
 import android.opengl.GLES32
 import android.opengl.GLSurfaceView
-import android.os.Bundle
+import android.view.View
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
-actual open class KanaView(private val renderer: KanaRenderer) : Activity() {
-    lateinit var glView: GLSurfaceView
+actual class KanaView constructor(private val ctx: Context, private val renderer: KanaRenderer) : View(ctx) {
+    var glView: GLSurfaceView = GLSurfaceView(ctx)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        glView = GLSurfaceView(this)
+    init {
         glView.setEGLContextClientVersion(3)
-
-        KanaGlobals.context = this
-        glView.setRenderer(KGLGLESProtocolDelegate(this, renderer))
-        this.setContentView(glView)
+        KanaGlobals.context = ctx
+        glView.setRenderer(KGLGLESProtocolDelegate(ctx, renderer))
     }
 }
 

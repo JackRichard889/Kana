@@ -42,7 +42,9 @@ class FirstView : KanaRenderer {
                 1.0F, 0.5F, 0.75F, 0.25F,
                 1.0F, 0.5F, 0.75F, 0.25F
             )
-            val n = Mat4.identity * (Mat4.identity * 2F)
+
+            Mat4.identity.translate(2 v 3 v 2)
+            m.scale(2 v 2 v 2).scale(3 v 3 v 3)
         }
     }
 }

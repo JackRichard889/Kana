@@ -6,4 +6,4 @@ interface KanaRenderer {
     fun onDrawFrame(context: KanaContext)
 }
 
-expect open class KanaView
+expect class KanaView
