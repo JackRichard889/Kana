@@ -2,6 +2,7 @@ package dev.jackrichard.kana
 
 import android.app.Activity
 import android.content.Context
+import android.opengl.GLES32
 import android.opengl.GLSurfaceView
 import android.os.Bundle
 import javax.microedition.khronos.egl.EGLConfig
@@ -14,6 +15,7 @@ actual open class KanaView(private val renderer: KanaRenderer) : Activity() {
         super.onCreate(savedInstanceState)
 
         glView = GLSurfaceView(this)
+        glView.setEGLContextClientVersion(3)
 
         KanaGlobals.context = this
         glView.setRenderer(KGLGLESProtocolDelegate(this, renderer))
@@ -36,6 +38,7 @@ class KGLGLESProtocolDelegate(val context: Context, private val delegate: KanaRe
     }
 
     override fun onSurfaceChanged(gl: GL10?, width: Int, height: Int) {
+        GLES32.glViewport(0, 0, width, height)
         delegate.onScreenSized(width to height)
     }
 
