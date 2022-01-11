@@ -1,4 +1,4 @@
-![Kana logo](https://www.github.com/JackRichard889/KonanGraphicsLanguage/blob/main/kana.png?raw=true)
+![Kana logo](https://www.github.com/JackRichard889/KonanGraphicsLanguage/raw/main/kana.png)
 
 # Kana
 
