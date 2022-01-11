@@ -17,10 +17,8 @@ class FirstView : KanaRenderer {
         val vertexFunctionAnd = KanaShader.compileShader(platform = KanaPlatform.ANDROID, type = KanaShaderType.VERTEX, name = "vertex_main", "")
         val fragmentFunctionAnd = KanaShader.compileShader(platform = KanaPlatform.ANDROID, type = KanaShaderType.FRAGMENT, name = "fragment_main", "")
 
-        pipeline.setVertexFunction(vertexFunctioniOS)
-        pipeline.setFragmentFunction(fragmentFunctioniOS)
-        pipeline.setVertexFunction(vertexFunctionAnd)
-        pipeline.setFragmentFunction(fragmentFunctionAnd)
+        pipeline.setVertexFunction(vertexFunctioniOS to vertexFunctionAnd)
+        pipeline.setFragmentFunction(fragmentFunctioniOS to fragmentFunctionAnd)
 
         pipeline.setVertexDescriptor(vertexDescriptor)
     }

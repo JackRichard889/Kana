@@ -4,8 +4,8 @@ import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.FloatBuffer
 
-typealias BufferedData = FloatBuffer
-actual fun FloatArray.buffered() : BufferedData =
+actual class BufferedData(buf: FloatBuffer)
+actual fun FloatArray.buffered() : BufferedData = BufferedData(buf =
     ByteBuffer.allocateDirect(this.size * 4).run {
         order(ByteOrder.nativeOrder())
         asFloatBuffer().apply {
@@ -13,3 +13,4 @@ actual fun FloatArray.buffered() : BufferedData =
             position(0)
         }
     }
+)
