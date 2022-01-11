@@ -9,6 +9,7 @@ val vertexDescriptor = defineDescriptor {
 
 class FirstView : KanaRenderer {
     private val pipeline = KanaPipeline.initNew()
+    private val vertices = floatArrayOf(0.0F, 0.5F, 0.5F, -0.5F, -0.5F, -0.5F).buffered()
 
     override fun onInitialized() {
         val vertexFunctioniOS = KanaShader.compileShader(platform = KanaPlatform.IOS, type = KanaShaderType.VERTEX, name = "vertex_main", "")

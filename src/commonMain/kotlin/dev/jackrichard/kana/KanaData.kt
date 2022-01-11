@@ -142,3 +142,10 @@ class VertexDescriptor {
 }
 
 fun defineDescriptor(block: VertexDescriptor.() -> Unit) : VertexDescriptor = VertexDescriptor().also(block)
+
+/*
+    Floats and buffers
+ */
+
+expect class BufferedData
+expect fun FloatArray.buffered() : BufferedData
