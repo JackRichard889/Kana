@@ -94,8 +94,8 @@ actual class KanaPipeline private actual constructor() {
         }
     }
 
-    actual fun setVertexFunction(shader: KanaShader?) { if (shader != null) { pipeline.setVertexFunction(shader.compiledSource.shader) } }
-    actual fun setFragmentFunction(shader: KanaShader?) { if (shader != null) { pipeline.setFragmentFunction(shader.compiledSource.shader) } }
+    actual fun setVertexFunction(shader: Pair<KanaShader?, KanaShader?>) { pipeline.setVertexFunction((if (shader.first == null) shader.second else shader.first)!!.compiledSource.shader) }
+    actual fun setFragmentFunction(shader: Pair<KanaShader?, KanaShader?>) { pipeline.setFragmentFunction((if (shader.first == null) shader.second else shader.first)!!.compiledSource.shader) }
     actual fun setVertexDescriptor(descriptor: VertexDescriptor) {
         val mtlDescriptor = MTLVertexDescriptor()
         descriptor.elements

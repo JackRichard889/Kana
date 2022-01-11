@@ -20,8 +20,8 @@ expect class KanaPipeline private constructor() {
         fun initNew() : KanaPipeline
     }
 
-    fun setVertexFunction(shader: KanaShader?)
-    fun setFragmentFunction(shader: KanaShader?)
+    fun setVertexFunction(shader: Pair<KanaShader?, KanaShader?>)
+    fun setFragmentFunction(shader: Pair<KanaShader?, KanaShader?>)
     fun setVertexDescriptor(descriptor: VertexDescriptor)
 }
 
