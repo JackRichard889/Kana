@@ -31,19 +31,7 @@ class FirstView : KanaRenderer {
         context.queueUp {
             linkPipeline(pipeline)
 
-            val a = vec4(1.0F, 0.5F, 0.8F, 1.0F)
-            val b = vec2(1.0F, 0.5F) + vec2(1.0F, 0.2F)
-            val c = 0.5F + vec2(1.0F, 0.5F)
 
-            val m = mat4(
-                1.0F, 0.5F, 0.75F, 0.25F,
-                1.0F, 0.5F, 0.75F, 0.25F,
-                1.0F, 0.5F, 0.75F, 0.25F,
-                1.0F, 0.5F, 0.75F, 0.25F
-            )
-
-            Mat4.identity.translate(2 v 3 v 2)
-            m.scale(2 v 2 v 2).scale(3 v 3 v 3)
         }
     }
 }

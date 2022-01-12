@@ -97,6 +97,11 @@ actual class KanaPipeline private actual constructor() {
     actual fun setVertexFunction(shader: Pair<KanaShader?, KanaShader?>) { pipeline.setVertexFunction((if (shader.first == null) shader.second else shader.first)!!.compiledSource.shader) }
     actual fun setFragmentFunction(shader: Pair<KanaShader?, KanaShader?>) { pipeline.setFragmentFunction((if (shader.first == null) shader.second else shader.first)!!.compiledSource.shader) }
     actual fun setVertexDescriptor(descriptor: VertexDescriptor) {
+        fun calcOffset(indexFrom: Int) : Int {
+            if (indexFrom < 0) { return 0 }
+            return descriptor.elements.subList(0, indexFrom).sumOf { it.size }
+        }
+
         val mtlDescriptor = MTLVertexDescriptor()
         descriptor.elements
             .zip(0 until descriptor.elements.size)
@@ -108,7 +113,11 @@ actual class KanaPipeline private actual constructor() {
                         "Vec4" -> MTLVertexFormatFloat4
                         else -> throw Exception("Unknown data type: ${it.first.type.simpleName}!")
                     }
+                mtlDescriptor.attributes.objectAtIndexedSubscript(it.second.toULong()).bufferIndex = 0u
+                mtlDescriptor.attributes.objectAtIndexedSubscript(it.second.toULong()).offset = calcOffset(it.second).toULong()
             }
+        mtlDescriptor.layouts.objectAtIndexedSubscript(0).stride = descriptor.elements.sumOf { it.size }.toULong()
+
         pipeline.vertexDescriptor = mtlDescriptor
     }
 }

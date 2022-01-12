@@ -125,20 +125,22 @@ infix fun Vec2.v(n: Number) : Vec3 = vec3(this.a, this.b, n.toFloat())
     Descriptors
  */
 
-class VertexDescriptorElement(t: KClass<*>) {
+class VertexDescriptorElement(n: String, s: Int, t: KClass<*>) {
     companion object {
-        inline fun <reified T : KanaShaderDataType> createNew() : VertexDescriptorElement = VertexDescriptorElement(T::class)
+        inline fun <reified T : KanaShaderDataType> createNew(n: String, s: Int) : VertexDescriptorElement = VertexDescriptorElement(n, s, T::class)
     }
 
     val type: KClass<*> = t
+    val name: String = n
+    val size: Int = s
 }
 
 class VertexDescriptor {
     internal val elements: MutableList<VertexDescriptorElement> = mutableListOf()
 
-    infix fun vec2(name: String) = elements.add(VertexDescriptorElement.createNew<Vec2>())
-    infix fun vec3(name: String) = elements.add(VertexDescriptorElement.createNew<Vec3>())
-    infix fun vec4(name: String) = elements.add(VertexDescriptorElement.createNew<Vec4>())
+    infix fun vec2(name: String) = elements.add(VertexDescriptorElement.createNew<Vec2>(name, 2))
+    infix fun vec3(name: String) = elements.add(VertexDescriptorElement.createNew<Vec3>(name, 3))
+    infix fun vec4(name: String) = elements.add(VertexDescriptorElement.createNew<Vec4>(name, 4))
 }
 
 fun defineDescriptor(block: VertexDescriptor.() -> Unit) : VertexDescriptor = VertexDescriptor().also(block)
