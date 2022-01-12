@@ -49,6 +49,7 @@ actual class KanaShaderSource { var shader: Int = 0 }
 
 actual class KanaPipeline private actual constructor() {
     private var program: Int = 0
+    private var vertexDescriptor: VertexDescriptor? = null
 
     actual companion object {
         actual fun initNew() : KanaPipeline = KanaPipeline().apply {
@@ -59,7 +60,41 @@ actual class KanaPipeline private actual constructor() {
     actual fun setVertexFunction(shader: Pair<KanaShader?, KanaShader?>) { GLES32.glAttachShader(program, (if (shader.first == null) shader.second else shader.first)!!.compiledSource.shader) }
     actual fun setFragmentFunction(shader: Pair<KanaShader?, KanaShader?>) { GLES32.glAttachShader(program, (if (shader.first == null) shader.second else shader.first)!!.compiledSource.shader) }
     actual fun setVertexDescriptor(descriptor: VertexDescriptor) {
+        vertexDescriptor = descriptor
 
+        fun calcOffset(indexFrom: Int) : Int {
+            if (indexFrom < 0) { return 0 }
+            return descriptor.elements.subList(0, indexFrom).sumOf { it.size }
+        }
+
+        val descriptorSize: Int = descriptor.elements.sumOf { it.size }
+
+        descriptor.elements.zip(0 until descriptor.elements.size).forEach {
+            val identifier = GLES32.glGetAttribLocation(program, it.first.name)
+
+            GLES32.glEnableVertexAttribArray(identifier)
+            GLES32.glVertexAttribPointer(
+                identifier,
+                it.first.size,
+                when (it.first.type.simpleName) {
+                    "Vec2" -> GLES32.GL_FLOAT
+                    "Vec3" -> GLES32.GL_FLOAT
+                    "Vec4" -> GLES32.GL_FLOAT
+                    else -> 0
+                },
+                false,
+                descriptorSize,
+                calcOffset(it.second - 1)
+            )
+        }
+    }
+
+    fun deInitFromDescriptor() {
+        // TODO: this needs to be called somewhere
+        vertexDescriptor!!.elements.forEach {
+            val identifier = GLES32.glGetAttribLocation(program, it.name)
+            GLES32.glDisableVertexAttribArray(identifier)
+        }
     }
 }
 
