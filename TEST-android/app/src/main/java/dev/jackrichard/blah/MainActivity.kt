@@ -2,6 +2,7 @@ package dev.jackrichard.blah
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.WindowManager
 import dev.jackrichard.kana.*
 
 val vertexDescriptor = defineDescriptor {
