@@ -30,8 +30,8 @@ class FirstView : KanaRenderer {
     override fun onDrawFrame(context: KanaContext) {
         context.queueUp {
             linkPipeline(pipeline)
-
-
+            sendBuffer(vertices)
+            drawPrimitives(0, 3)
         }
     }
 }

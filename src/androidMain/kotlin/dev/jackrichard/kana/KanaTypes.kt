@@ -11,6 +11,7 @@ actual class KanaContext {
     actual fun queueUp(func: KanaCommandBuffer.() -> Unit) {
         val kglBuffer = KanaCommandBuffer()
         kglBuffer.func()
+        kglBuffer.deinit()
     }
 
     actual class KanaCommandBuffer internal constructor() {
@@ -19,6 +20,10 @@ actual class KanaContext {
             // TODO: implement with platform specific code
             this.pipeline = pipeline
         }
+
+        actual fun sendBuffer(buffer: BufferedData) { GLES32.glBufferData(0, buffer.buf.capacity(), buffer.buf, GLES32.GL_STATIC_DRAW) }
+        actual fun drawPrimitives(start: Int, end: Int) { GLES32.glDrawArrays(GLES32.GL_TRIANGLES, start, end) }
+        fun deinit() { pipeline!!.deInitFromDescriptor() }
     }
 }
 

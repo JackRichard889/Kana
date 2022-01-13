@@ -39,6 +39,14 @@ actual class KanaContext {
                 this.pipelineState = mtlRenderPipelineStateProtocol
             }
         }
+
+        actual fun sendBuffer(buffer: BufferedData) {
+
+        }
+
+        actual fun drawPrimitives(start: Int, end: Int) {
+
+        }
     }
 }
 

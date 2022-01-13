@@ -4,6 +4,8 @@ expect class KanaContext {
     fun queueUp(func: KanaCommandBuffer.() -> Unit)
     class KanaCommandBuffer {
         fun linkPipeline(pipeline: KanaPipeline)
+        fun sendBuffer(buffer: BufferedData)
+        fun drawPrimitives(start: Int, end: Int)
     }
 }
 

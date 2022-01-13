@@ -6,13 +6,15 @@ import dev.jackrichard.kana.*
 
 val vertexDescriptor = defineDescriptor {
     this vec2 "position"
-    this vec4 "color"
 }
 
 class FirstView : KanaRenderer {
-    private val pipeline = KanaPipeline.initNew()
+    private lateinit var pipeline: KanaPipeline
+    private val vertices = floatArrayOf(0.0F, 0.5F, 0.5F, -0.5F, -0.5F, -0.5F).buffered()
 
     override fun onInitialized() {
+        pipeline = KanaPipeline.initNew()
+
         val vertexFunctioniOS = KanaShader.compileShader(platform = KanaPlatform.IOS, type = KanaShaderType.VERTEX, name = "vertex_main", "")
         val fragmentFunctioniOS = KanaShader.compileShader(platform = KanaPlatform.IOS, type = KanaShaderType.FRAGMENT, name = "fragment_main", "")
         val vertexFunctionAnd = KanaShader.compileShader(platform = KanaPlatform.ANDROID, type = KanaShaderType.VERTEX, name = "vertex_main",
@@ -29,35 +31,18 @@ class FirstView : KanaRenderer {
                 "}"
         )
 
-        pipeline.setVertexFunction(vertexFunctioniOS)
-        pipeline.setFragmentFunction(fragmentFunctioniOS)
-        pipeline.setVertexFunction(vertexFunctionAnd)
-        pipeline.setFragmentFunction(fragmentFunctionAnd)
-
+        pipeline.setVertexFunction(vertexFunctioniOS to vertexFunctionAnd)
+        pipeline.setFragmentFunction(fragmentFunctioniOS to fragmentFunctionAnd)
         pipeline.setVertexDescriptor(vertexDescriptor)
     }
 
-    override fun onScreenSized(size: Pair<Int, Int>) {
-        TODO("Not yet implemented")
-    }
+    override fun onScreenSized(size: Pair<Int, Int>) { }
 
     override fun onDrawFrame(context: KanaContext) {
         context.queueUp {
             linkPipeline(pipeline)
-
-            val a = vec4(1.0F, 0.5F, 0.8F, 1.0F)
-            val b = vec2(1.0F, 0.5F) + vec2(1.0F, 0.2F)
-            val c = 0.5F + vec2(1.0F, 0.5F)
-
-            val m = mat4(
-                1.0F, 0.5F, 0.75F, 0.25F,
-                1.0F, 0.5F, 0.75F, 0.25F,
-                1.0F, 0.5F, 0.75F, 0.25F,
-                1.0F, 0.5F, 0.75F, 0.25F
-            )
-
-            Mat4.identity.translate(2 v 3 v 2)
-            m.scale(2 v 2 v 2).scale(3 v 3 v 3)
+            sendBuffer(vertices)
+            drawPrimitives(0, 3)
         }
     }
 }
@@ -66,7 +51,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val view = KanaView(ctx = this, renderer = FirstView())
-        setContentView(view.glView)
+        KanaView(ctx = this, renderer = FirstView()).also { setContentView(it) }
     }
 }
