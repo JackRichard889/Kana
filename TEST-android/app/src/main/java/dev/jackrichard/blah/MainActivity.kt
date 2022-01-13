@@ -34,6 +34,8 @@ class FirstView : KanaRenderer {
 
         pipeline.setVertexFunction(vertexFunctioniOS to vertexFunctionAnd)
         pipeline.setFragmentFunction(fragmentFunctioniOS to fragmentFunctionAnd)
+        pipeline.commit()
+
         pipeline.setVertexDescriptor(vertexDescriptor)
     }
 

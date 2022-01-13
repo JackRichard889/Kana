@@ -102,6 +102,7 @@ actual class KanaPipeline private actual constructor() {
         }
     }
 
+    actual fun commit() { }
     actual fun setVertexFunction(shader: Pair<KanaShader?, KanaShader?>) { pipeline.setVertexFunction((if (shader.first == null) shader.second else shader.first)!!.compiledSource.shader) }
     actual fun setFragmentFunction(shader: Pair<KanaShader?, KanaShader?>) { pipeline.setFragmentFunction((if (shader.first == null) shader.second else shader.first)!!.compiledSource.shader) }
     actual fun setVertexDescriptor(descriptor: VertexDescriptor) {
@@ -128,6 +129,7 @@ actual class KanaPipeline private actual constructor() {
 
         pipeline.vertexDescriptor = mtlDescriptor
     }
+
 }
 
 actual class KanaShader private actual constructor(val platform: KanaPlatform, val source: String, val type: KanaShaderType, val name: String) {
