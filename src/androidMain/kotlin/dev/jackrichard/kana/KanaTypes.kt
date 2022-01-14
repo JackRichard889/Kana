@@ -54,50 +54,62 @@ actual class KanaShaderSource { var shader: Int = 0 }
 
 actual class KanaPipeline private actual constructor() {
     private var program: Int = 0
-    private var vertexDescriptor: VertexDescriptor? = null
+    actual var vertexShader: Pair<KanaShader?, KanaShader?> = null to null
+        set(value) {
+            field = value
+
+            GLES32.glAttachShader(program, (if (value.first == null) value.second else value.first)!!.compiledSource.shader)
+        }
+    actual var fragmentShader: Pair<KanaShader?, KanaShader?> = null to null
+        set(value) {
+            field = value
+
+            GLES32.glAttachShader(program, (if (value.first == null) value.second else value.first)!!.compiledSource.shader)
+        }
+    actual var vertexDescriptor: VertexDescriptor? = null
+        set(value) {
+            field = value
+
+            if (value == null) { return; }
+            fun calcOffset(indexFrom: Int) : Int {
+                if (indexFrom < 0) { return 0 }
+                return value.elements.subList(0, indexFrom).sumOf { it.size }.also {
+                    println("Offset calculated as $it for index $indexFrom")
+                }
+            }
+
+            val descriptorSize: Int = value.elements.sumOf { it.size }.also {
+                println("Descriptor size is $it")
+            }
+
+            value.elements.zip(0 until value.elements.size).forEach {
+                val identifier = GLES32.glGetAttribLocation(program, it.first.name)
+                println("${it.first.name} is located at $identifier.")
+
+                GLES32.glEnableVertexAttribArray(identifier)
+                GLES32.glVertexAttribPointer(
+                    identifier,
+                    it.first.size,
+                    when (it.first.type.simpleName) {
+                        "Vec2" -> GLES32.GL_FLOAT
+                        "Vec3" -> GLES32.GL_FLOAT
+                        "Vec4" -> GLES32.GL_FLOAT
+                        else -> 0
+                    },
+                    false,
+                    descriptorSize,
+                    calcOffset(it.second - 1)
+                )
+            }
+            field = value
+        }
 
     actual companion object {
-        actual fun initNew() : KanaPipeline = KanaPipeline().apply {
-            program = GLES32.glCreateProgram()
-        }
-    }
-
-    actual fun commit() { GLES32.glLinkProgram(program) }
-    actual fun setVertexFunction(shader: Pair<KanaShader?, KanaShader?>) { GLES32.glAttachShader(program, (if (shader.first == null) shader.second else shader.first)!!.compiledSource.shader) }
-    actual fun setFragmentFunction(shader: Pair<KanaShader?, KanaShader?>) { GLES32.glAttachShader(program, (if (shader.first == null) shader.second else shader.first)!!.compiledSource.shader) }
-    actual fun setVertexDescriptor(descriptor: VertexDescriptor) {
-        vertexDescriptor = descriptor
-
-        fun calcOffset(indexFrom: Int) : Int {
-            if (indexFrom < 0) { return 0 }
-            return descriptor.elements.subList(0, indexFrom).sumOf { it.size }.also {
-                println("Offset calculated as $it for index $indexFrom")
-            }
-        }
-
-        val descriptorSize: Int = descriptor.elements.sumOf { it.size }.also {
-            println("Descriptor size is $it")
-        }
-
-        descriptor.elements.zip(0 until descriptor.elements.size).forEach {
-            val identifier = GLES32.glGetAttribLocation(program, it.first.name)
-            println("${it.first.name} is located at $identifier.")
-
-            GLES32.glEnableVertexAttribArray(identifier)
-            GLES32.glVertexAttribPointer(
-                identifier,
-                it.first.size,
-                when (it.first.type.simpleName) {
-                    "Vec2" -> GLES32.GL_FLOAT
-                    "Vec3" -> GLES32.GL_FLOAT
-                    "Vec4" -> GLES32.GL_FLOAT
-                    else -> 0
-                },
-                false,
-                descriptorSize,
-                calcOffset(it.second - 1)
-            )
-        }
+        actual fun create(func: KanaPipeline.() -> Unit): KanaPipeline =
+            KanaPipeline()
+                .also { it.program = GLES32.glCreateProgram() }
+                .also(func)
+                .also { GLES32.glLinkProgram(it.program) }
     }
 
     fun deInitFromDescriptor() {

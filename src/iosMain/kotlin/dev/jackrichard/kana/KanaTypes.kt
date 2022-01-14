@@ -93,43 +93,54 @@ actual class KanaShaderSource { lateinit var shader: MTLFunctionProtocol }
 
 actual class KanaPipeline private actual constructor() {
     lateinit var pipeline: MTLRenderPipelineDescriptor
+    actual var vertexShader: Pair<KanaShader?, KanaShader?> = null to null
+        set(value) {
+            field = value
+
+            pipeline.setVertexFunction((if (value.first == null) value.second else value.first)!!.compiledSource.shader)
+        }
+    actual var fragmentShader: Pair<KanaShader?, KanaShader?> = null to null
+        set(value) {
+            field = value
+
+            pipeline.setFragmentFunction((if (value.first == null) value.second else value.first)!!.compiledSource.shader)
+        }
+    actual var vertexDescriptor: VertexDescriptor? = null
+        set(value) {
+            field = value
+
+            if (value == null) { return }
+
+            fun calcOffset(indexFrom: Int) : Int {
+                if (indexFrom < 0) { return 0 }
+                return value.elements.subList(0, indexFrom).sumOf { it.size }
+            }
+
+            val mtlDescriptor = MTLVertexDescriptor()
+            value.elements
+                .zip(0 until value.elements.size)
+                .forEach {
+                    mtlDescriptor.attributes.objectAtIndexedSubscript(it.second.toULong()).format =
+                        when (it.first.type.simpleName) {
+                            "Vec2" -> MTLVertexFormatFloat2
+                            "Vec3" -> MTLVertexFormatFloat3
+                            "Vec4" -> MTLVertexFormatFloat4
+                            else -> throw Exception("Unknown data type: ${it.first.type.simpleName}!")
+                        }
+                    mtlDescriptor.attributes.objectAtIndexedSubscript(it.second.toULong()).bufferIndex = 0u
+                    mtlDescriptor.attributes.objectAtIndexedSubscript(it.second.toULong()).offset = calcOffset(it.second).toULong()
+                }
+            mtlDescriptor.layouts.objectAtIndexedSubscript(0).stride = value.elements.sumOf { it.size }.toULong()
+
+            pipeline.vertexDescriptor = mtlDescriptor
+        }
 
     actual companion object {
-        actual fun initNew(): KanaPipeline {
-            return KanaPipeline().apply {
-                pipeline = MTLRenderPipelineDescriptor()
-            }
-        }
+        actual fun create(func: KanaPipeline.() -> Unit): KanaPipeline =
+            KanaPipeline()
+                .also(func)
+                .also { it.pipeline = MTLRenderPipelineDescriptor() }
     }
-
-    actual fun commit() { }
-    actual fun setVertexFunction(shader: Pair<KanaShader?, KanaShader?>) { pipeline.setVertexFunction((if (shader.first == null) shader.second else shader.first)!!.compiledSource.shader) }
-    actual fun setFragmentFunction(shader: Pair<KanaShader?, KanaShader?>) { pipeline.setFragmentFunction((if (shader.first == null) shader.second else shader.first)!!.compiledSource.shader) }
-    actual fun setVertexDescriptor(descriptor: VertexDescriptor) {
-        fun calcOffset(indexFrom: Int) : Int {
-            if (indexFrom < 0) { return 0 }
-            return descriptor.elements.subList(0, indexFrom).sumOf { it.size }
-        }
-
-        val mtlDescriptor = MTLVertexDescriptor()
-        descriptor.elements
-            .zip(0 until descriptor.elements.size)
-            .forEach {
-                mtlDescriptor.attributes.objectAtIndexedSubscript(it.second.toULong()).format =
-                    when (it.first.type.simpleName) {
-                        "Vec2" -> MTLVertexFormatFloat2
-                        "Vec3" -> MTLVertexFormatFloat3
-                        "Vec4" -> MTLVertexFormatFloat4
-                        else -> throw Exception("Unknown data type: ${it.first.type.simpleName}!")
-                    }
-                mtlDescriptor.attributes.objectAtIndexedSubscript(it.second.toULong()).bufferIndex = 0u
-                mtlDescriptor.attributes.objectAtIndexedSubscript(it.second.toULong()).offset = calcOffset(it.second).toULong()
-            }
-        mtlDescriptor.layouts.objectAtIndexedSubscript(0).stride = descriptor.elements.sumOf { it.size }.toULong()
-
-        pipeline.vertexDescriptor = mtlDescriptor
-    }
-
 }
 
 actual class KanaShader private actual constructor(val platform: KanaPlatform, val source: String, val type: KanaShaderType, val name: String) {

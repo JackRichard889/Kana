@@ -18,14 +18,13 @@ expect class KanaTexture {
 }
 
 expect class KanaPipeline private constructor() {
-    companion object {
-        fun initNew() : KanaPipeline
-    }
+    var vertexDescriptor: VertexDescriptor?
+    var vertexShader: Pair<KanaShader?, KanaShader?>
+    var fragmentShader: Pair<KanaShader?, KanaShader?>
 
-    fun commit()
-    fun setVertexFunction(shader: Pair<KanaShader?, KanaShader?>)
-    fun setFragmentFunction(shader: Pair<KanaShader?, KanaShader?>)
-    fun setVertexDescriptor(descriptor: VertexDescriptor)
+    companion object {
+        fun create(func: KanaPipeline.() -> Unit) : KanaPipeline
+    }
 }
 
 enum class KanaShaderType { FRAGMENT, VERTEX }
