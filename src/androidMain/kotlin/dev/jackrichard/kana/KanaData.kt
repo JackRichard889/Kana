@@ -4,13 +4,16 @@ import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.FloatBuffer
 
-actual class BufferedData(buf: FloatBuffer)
-actual fun FloatArray.buffered() : BufferedData = BufferedData(buf =
-    ByteBuffer.allocateDirect(this.size * 4).run {
-        order(ByteOrder.nativeOrder())
-        asFloatBuffer().apply {
-            put(this)
-            position(0)
+actual class BufferedData(val buf: FloatBuffer)
+actual fun FloatArray.buffered() : BufferedData {
+    val fArray = this
+    return BufferedData(buf =
+        ByteBuffer.allocateDirect(this.size * 4).run {
+            order(ByteOrder.nativeOrder())
+            asFloatBuffer().apply {
+                put(fArray)
+                position(0)
+            }
         }
-    }
-)
+    )
+}

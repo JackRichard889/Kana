@@ -5,7 +5,7 @@ import kotlinx.cinterop.toCValues
 import platform.Metal.MTLBufferProtocol
 import platform.Metal.MTLResourceOptionCPUCacheModeWriteCombined
 
-actual class BufferedData(buf: MTLBufferProtocol)
+actual class BufferedData(val buf: MTLBufferProtocol)
 actual fun FloatArray.buffered() : BufferedData = BufferedData(buf =
     KanaGlobals.device.newBufferWithBytes(
         this.toCValues().getPointer(MemScope()),
