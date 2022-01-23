@@ -19,7 +19,7 @@ actual class KanaView constructor(ctx: Context, renderer: KanaRenderer?) : GLSur
 
 class KGLGLESProtocolDelegate(val context: Context, private val delegate: KanaRenderer) : GLSurfaceView.Renderer {
     override fun onSurfaceCreated(gl: GL10?, config: EGLConfig?) {
-        gl!!.glClearColor(1.0f, 1.0f, 1.0f, 1.0f)
+        GLES32.glClearColor(0.0f, 0.0f, 0.0f, 1.0f)
         delegate.onInitialized()
     }
 
