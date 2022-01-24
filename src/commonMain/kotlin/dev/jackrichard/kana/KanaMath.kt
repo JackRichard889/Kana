@@ -149,5 +149,7 @@ fun defineDescriptor(block: VertexDescriptor.() -> Unit) : VertexDescriptor = Ve
     Floats and buffers
  */
 
-expect class BufferedData
+expect class BufferedData {
+    val size: Int
+}
 expect fun FloatArray.buffered() : BufferedData

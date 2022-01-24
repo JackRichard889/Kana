@@ -24,7 +24,7 @@ actual class KanaContext {
             }
         }
 
-        actual fun sendBuffer(buffer: BufferedData) { GLES32.glBufferData(GLES32.GL_ARRAY_BUFFER, buffer.buf.capacity(), buffer.buf, GLES32.GL_STATIC_DRAW) }
+        actual fun sendBuffer(buffer: BufferedData) { GLES32.glBufferData(GLES32.GL_ARRAY_BUFFER, buffer.size, buffer.buf, GLES32.GL_STATIC_DRAW) }
         actual fun drawPrimitives(start: Int, end: Int) { GLES32.glDrawArrays(GLES32.GL_TRIANGLES, start, end) }
         fun deinit() { pipeline!!.deInitFromDescriptor() }
     }
@@ -115,18 +115,17 @@ actual class KanaPipeline private actual constructor() {
                 .also(func)
                 .also { GLES32.glLinkProgram(it.program) }
                 .also {
-                    val buf = IntBuffer.allocate(1)
-                    GLES32.glGenBuffers(1, buf)
-                    GLES32.glBindBuffer(GLES32.GL_ARRAY_BUFFER, buf[0])
-
                     val vao = IntBuffer.allocate(1)
                     GLES32.glGenVertexArrays(1, vao)
                     GLES32.glBindVertexArray(vao[0])
+
+                    val buf = IntBuffer.allocate(1)
+                    GLES32.glGenBuffers(1, buf)
+                    GLES32.glBindBuffer(GLES32.GL_ARRAY_BUFFER, buf[0])
                 }
     }
 
     fun deInitFromDescriptor() {
-        // TODO: this needs to be called somewhere
         vertexDescriptor!!.elements.forEach {
             val identifier = GLES32.glGetAttribLocation(program, it.name)
             GLES32.glDisableVertexAttribArray(identifier)

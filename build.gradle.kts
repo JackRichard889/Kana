@@ -16,7 +16,7 @@ plugins {
 }
 
 group = "dev.jackrichard.kana"
-version = "0.4.8-ALPHA"
+version = "0.4.8b-ALPHA"
 
 repositories {
     google()
