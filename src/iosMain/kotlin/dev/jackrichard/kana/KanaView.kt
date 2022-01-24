@@ -14,7 +14,7 @@ import platform.UIKit.UIViewController
 import platform.UIKit.addSubview
 import platform.darwin.NSObject
 
-actual class KanaView constructor(coder: NSCoder, private val delegate: KanaRenderer) : UIViewController(coder) {
+actual class KanaView constructor(coder: NSCoder, private val builder: () -> KanaRenderer) : UIViewController(coder) {
     override fun viewDidLoad() {
         super.viewDidLoad()
 
@@ -25,7 +25,7 @@ actual class KanaView constructor(coder: NSCoder, private val delegate: KanaRend
         KanaGlobals.commandQueue = device.newCommandQueue()!!
 
         view.device = device
-        view.delegate = KGLMetalProtocolDelegate(delegate)
+        view.delegate = KGLMetalProtocolDelegate(builder())
 
         view.clearColor = MTLClearColorMake(1.0, 1.0, 1.0, 1.0)
         view.colorPixelFormat = MTLPixelFormatBGRA8Unorm_sRGB
@@ -36,10 +36,6 @@ actual class KanaView constructor(coder: NSCoder, private val delegate: KanaRend
 }
 
 class KGLMetalProtocolDelegate(private val delegate: KanaRenderer) : NSObject(), MTKViewDelegateProtocol {
-    init {
-        delegate.onInitialized()
-    }
-
     override fun drawInMTKView(view: MTKView) {
         val context = KanaContext()
         context.delegateView = view
