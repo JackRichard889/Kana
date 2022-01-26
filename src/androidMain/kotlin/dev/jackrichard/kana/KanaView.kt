@@ -6,14 +6,13 @@ import android.opengl.GLSurfaceView
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
-actual class KanaView constructor(ctx: Context, builder: () -> KanaRenderer?) : GLSurfaceView(ctx) {
-    constructor(ctx: Context) : this(ctx, { null })
-
-    init {
-        KanaGlobals.context = ctx
-        setEGLContextClientVersion(3)
-        setRenderer(KGLGLESProtocolDelegate(ctx, builder))
-    }
+actual typealias KanaView = GLSurfaceView
+actual object KanaBuilder {
+    fun buildView(ctx: Context, delegate: () -> KanaRenderer): KanaView =
+        GLSurfaceView(ctx).also {
+            it.setEGLContextClientVersion(3)
+            it.setRenderer(KGLGLESProtocolDelegate(ctx, delegate))
+        }
 }
 
 class KGLGLESProtocolDelegate(val context: Context, private val builder: () -> KanaRenderer?) : GLSurfaceView.Renderer {

@@ -1,6 +1,7 @@
 package dev.jackrichard.kana
 
 import kotlinx.cinterop.CValue
+import kotlinx.cinterop.ExportObjCClass
 import kotlinx.cinterop.useContents
 import platform.CoreGraphics.CGSize
 import platform.Foundation.NSCoder
@@ -10,14 +11,14 @@ import platform.Metal.MTLPixelFormatBGRA8Unorm_sRGB
 import platform.Metal.MTLPixelFormatDepth32Float
 import platform.MetalKit.MTKView
 import platform.MetalKit.MTKViewDelegateProtocol
+import platform.UIKit.UIView
 import platform.UIKit.UIViewController
 import platform.UIKit.addSubview
 import platform.darwin.NSObject
 
-actual class KanaView constructor(coder: NSCoder, private val builder: () -> KanaRenderer) : UIViewController(coder) {
-    override fun viewDidLoad() {
-        super.viewDidLoad()
-
+actual typealias KanaView = UIView
+actual object KanaBuilder {
+    fun buildView(delegate: () -> KanaRenderer): KanaView = UIView().also {
         val view = MTKView()
         val device = MTLCreateSystemDefaultDevice()!!
 
@@ -25,13 +26,13 @@ actual class KanaView constructor(coder: NSCoder, private val builder: () -> Kan
         KanaGlobals.commandQueue = device.newCommandQueue()!!
 
         view.device = device
-        view.delegate = KGLMetalProtocolDelegate(builder())
+        view.delegate = KGLMetalProtocolDelegate(delegate())
 
         view.clearColor = MTLClearColorMake(1.0, 1.0, 1.0, 1.0)
         view.colorPixelFormat = MTLPixelFormatBGRA8Unorm_sRGB
         view.depthStencilPixelFormat = MTLPixelFormatDepth32Float
 
-        this.view.addSubview(view)
+        it.addSubview(view)
     }
 }
 

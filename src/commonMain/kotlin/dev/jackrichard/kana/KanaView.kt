@@ -6,3 +6,4 @@ interface KanaRenderer {
 }
 
 expect class KanaView
+expect object KanaBuilder
