@@ -75,7 +75,7 @@ actual class KanaTexture private constructor(name: String, ext: String) {
     }
 
     actual companion object {
-        actual fun genNew(name: String, extension: String) : KanaTexture = KanaTexture(name, extension)
+        actual fun make(name: String, extension: String) : KanaTexture = KanaTexture(name, extension)
     }
 }
 
@@ -89,20 +89,20 @@ actual class KanaTexture private constructor(name: String, ext: String) {
     }
 }*/
 
-actual class KanaShaderSource { lateinit var shader: MTLFunctionProtocol }
+actual class KanaShaderSource constructor(val shader: MTLFunctionProtocol)
 
 actual class KanaPipeline private actual constructor() {
-    lateinit var pipeline: MTLRenderPipelineDescriptor
+    var pipeline: MTLRenderPipelineDescriptor = MTLRenderPipelineDescriptor()
     actual var vertexShader: Pair<KanaShader?, KanaShader?> = null to null
         set(value) {
             field = value
 
-            pipeline.setVertexFunction((if (value.first == null) value.second else value.first)!!.compiledSource.shader)
+            pipeline.setVertexFunction((value.first ?: value.second)!!.compiledSource.shader)
         }
     actual var fragmentShader: Pair<KanaShader?, KanaShader?> = null to null
         set(value) {
             field = value
-            pipeline.setFragmentFunction((if (value.first == null) value.second else value.first)!!.compiledSource.shader)
+            pipeline.setFragmentFunction((value.first ?: value.second)!!.compiledSource.shader)
         }
 
     actual var vertexDescriptor: VertexDescriptor? = null
@@ -139,17 +139,13 @@ actual class KanaPipeline private actual constructor() {
         actual fun create(func: KanaPipeline.() -> Unit): KanaPipeline =
             KanaPipeline()
                 .also(func)
-                .also { it.pipeline = MTLRenderPipelineDescriptor() }
     }
 }
 
-actual class KanaShader private actual constructor(val platform: KanaPlatform, val source: String, val type: KanaShaderType, val name: String) {
+actual class KanaShader private actual constructor(val platform: KanaPlatform, source: String, val type: KanaShaderType, name: String) {
 
-    actual var compiledSource: KanaShaderSource = KanaShaderSource().apply {
-        shader = KanaGlobals.device
-            .newLibraryWithSource(source, null, error = null)!!
-            .newFunctionWithName(shader.name)!!
-    }
+    actual var compiledSource: KanaShaderSource =
+        KanaShaderSource(KanaGlobals.device.newLibraryWithSource(source, MTLCompileOptions.new(), error = null)!!.newFunctionWithName(name)!!)
 
     actual companion object {
         actual fun compileShader(

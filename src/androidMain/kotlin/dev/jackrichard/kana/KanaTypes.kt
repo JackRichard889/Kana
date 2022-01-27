@@ -41,7 +41,7 @@ actual class KanaTexture private constructor(name: String, ext: String) {
     }
 
     actual companion object {
-        actual fun genNew(name: String, extension: String) = KanaTexture(name, extension)
+        actual fun make(name: String, extension: String) = KanaTexture(name, extension)
     }
 }
 
@@ -62,13 +62,13 @@ actual class KanaPipeline private actual constructor() {
         set(value) {
             field = value
 
-            GLES32.glAttachShader(program, (if (value.first == null) value.second else value.first)!!.compiledSource.shader)
+            GLES32.glAttachShader(program, (value.first ?: value.second)!!.compiledSource.shader)
         }
     actual var fragmentShader: Pair<KanaShader?, KanaShader?> = null to null
         set(value) {
             field = value
 
-            GLES32.glAttachShader(program, (if (value.first == null) value.second else value.first)!!.compiledSource.shader)
+            GLES32.glAttachShader(program, (value.first ?: value.second)!!.compiledSource.shader)
         }
     actual var vertexDescriptor: VertexDescriptor? = null
 

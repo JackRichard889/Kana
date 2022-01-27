@@ -13,7 +13,7 @@ expect object KanaGlobals
 
 expect class KanaTexture {
     companion object {
-        fun genNew(name: String, extension: String) : KanaTexture
+        fun make(name: String, extension: String) : KanaTexture
     }
 }
 
