@@ -56,21 +56,20 @@ actual object KanaGlobals {
 }
 
 actual class KanaTexture private constructor(name: String, ext: String) {
-    private lateinit var texture: MTLTextureProtocol
+    private var texture: MTLTextureProtocol
 
     init {
         val loader = MTKTextureLoader(device = KanaGlobals.device)
-        loader.newTextureWithName(
+        texture = loader.newTextureWithName(
             "$name.$ext",
             scaleFactor = 1.0,
             bundle = null,
             options = mapOf(
                 MTKTextureLoaderOptionGenerateMipmaps to true,
                 MTKTextureLoaderOptionSRGB to true
-            )
-        ) { mtlTextureProtocol: MTLTextureProtocol?, _: NSError? ->
-            texture = mtlTextureProtocol!!
-        }
+            ),
+            error = null
+        )!!
     }
 
     actual companion object {

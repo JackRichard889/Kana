@@ -2,7 +2,9 @@ package dev.jackrichard.kana
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.BitmapFactory
 import android.opengl.GLES32
+import android.opengl.GLUtils
 import java.nio.IntBuffer
 import javax.microedition.khronos.opengles.GL10
 
@@ -42,8 +44,20 @@ actual object KanaGlobals {
 }
 
 actual class KanaTexture private constructor(name: String, ext: String) {
-    init {
+    private val textureID = IntArray(1)
 
+    init {
+        GLES32.glGenTextures(1, textureID, 0)
+
+        GLES32.glBindTexture(GLES32.GL_TEXTURE_2D, textureID[0])
+        GLES32.glTexParameteri(GLES32.GL_TEXTURE_2D, GLES32.GL_TEXTURE_MIN_FILTER, GLES32.GL_NEAREST)
+        GLES32.glTexParameteri(GLES32.GL_TEXTURE_2D, GLES32.GL_TEXTURE_MAG_FILTER, GLES32.GL_LINEAR)
+
+        val inps = KanaGlobals.context.resources.assets.open("$name.$ext")
+        val bitmap = BitmapFactory.decodeStream(inps)
+
+        GLUtils.texImage2D(GLES32.GL_TEXTURE_2D, 0, bitmap, 0)
+        bitmap.recycle()
     }
 
     actual companion object {
