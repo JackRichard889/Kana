@@ -10,13 +10,18 @@ import platform.MetalKit.MTKView
 actual class KanaContext {
     lateinit var delegateView: MTKView
 
-    actual fun queueUp(func: KanaCommandBuffer.() -> Unit) {
+    actual fun queueUp(pipeline: KanaPipeline, func: KanaCommandBuffer.() -> Unit) {
         val buffer = KanaGlobals.commandQueue.commandBuffer()
         val renderPassDescriptor = delegateView.currentRenderPassDescriptor!!
 
         renderPassDescriptor.colorAttachments.objectAtIndexedSubscript(0).clearColor = MTLClearColorMake(0.0, 0.0, 0.0, 1.0)
         val commandEncoder = buffer!!.renderCommandEncoderWithDescriptor(renderPassDescriptor)!!
-        // TODO: set other attributes on commandEncoder here
+        KanaGlobals.device.newRenderPipelineStateWithDescriptor(pipeline.pipeline) { mtlRenderPipelineStateProtocol: MTLRenderPipelineStateProtocol?, nsError: NSError? ->
+            if (nsError != null) {
+                throw Exception("Could not create pipeline state!\n${nsError.localizedDescription}")
+            }
+            commandEncoder.setRenderPipelineState(mtlRenderPipelineStateProtocol!!)
+        }
 
         val kglBuffer = KanaCommandBuffer(renderEncoder = commandEncoder)
         kglBuffer.func()
@@ -30,22 +35,16 @@ actual class KanaContext {
     actual class KanaCommandBuffer internal constructor(
         private val renderEncoder: MTLRenderCommandEncoderProtocol
     ) {
-        private var pipelineState: MTLRenderPipelineStateProtocol? = null
-        actual fun linkPipeline(pipeline: KanaPipeline) {
-            KanaGlobals.device.newRenderPipelineStateWithDescriptor(pipeline.pipeline) { mtlRenderPipelineStateProtocol: MTLRenderPipelineStateProtocol?, nsError: NSError? ->
-                if (nsError != null) {
-                    throw Exception("Could not create pipeline state!\n${nsError.localizedDescription}")
-                }
-                this.pipelineState = mtlRenderPipelineStateProtocol
-            }
-        }
-
         actual fun sendBuffer(buffer: BufferedData) {
-
+            renderEncoder.setVertexBuffer(buffer.buf, 0, 0)
         }
 
-        actual fun drawPrimitives(start: Int, end: Int) {
-
+        actual fun drawPrimitives(start: Int, end: Int, order: BufferedData?) {
+            if (order != null) {
+                renderEncoder.drawIndexedPrimitives(MTLPrimitiveTypeTriangle, (end - start).toULong(), MTLIndexTypeUInt16, order.buf, 0)
+            } else {
+                renderEncoder.drawPrimitives(MTLPrimitiveTypeTriangle, start.toULong(), end.toULong(), 1)
+            }
         }
     }
 }

@@ -17,13 +17,13 @@ class FirstView : KanaRenderer {
         }
     }
 
-    private val vertices = floatArrayOf(0.0F, 0.5F, 0.5F, -0.5F, -0.5F, -0.5F).buffered()
+    private val vertices = floatArrayOf(-0.5f, 0.5f, -0.5f, -0.5f, 0.5f, -0.5f, 0.5f, 0.5f).buffered()
+    private val order = shortArrayOf(0, 1, 2, 0, 2, 3).buffered()
 
     override fun onDrawFrame(context: KanaContext) {
-        context.queueUp {
-            linkPipeline(pipeline)
+        context.queueUp(pipeline) {
             sendBuffer(vertices)
-            drawPrimitives(0, 3)
+            drawPrimitives(0, 3, order = order)
         }
     }
 }

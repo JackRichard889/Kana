@@ -1,11 +1,10 @@
 package dev.jackrichard.kana
 
 expect class KanaContext {
-    fun queueUp(func: KanaCommandBuffer.() -> Unit)
+    fun queueUp(pipeline: KanaPipeline, func: KanaCommandBuffer.() -> Unit)
     class KanaCommandBuffer {
-        fun linkPipeline(pipeline: KanaPipeline)
         fun sendBuffer(buffer: BufferedData)
-        fun drawPrimitives(start: Int, end: Int)
+        fun drawPrimitives(start: Int, end: Int, order: BufferedData? = null)
     }
 }
 

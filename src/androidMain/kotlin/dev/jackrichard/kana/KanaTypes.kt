@@ -9,23 +9,29 @@ import javax.microedition.khronos.opengles.GL10
 actual class KanaContext {
     lateinit var delegateView: GL10
 
-    actual fun queueUp(func: KanaCommandBuffer.() -> Unit) {
-        val kglBuffer = KanaCommandBuffer()
+    actual fun queueUp(pipeline: KanaPipeline, func: KanaCommandBuffer.() -> Unit) {
+        val kglBuffer = KanaCommandBuffer().also {
+            it.pipeline = pipeline.also { pipel ->
+                GLES32.glUseProgram(pipel.program)
+                pipel.initFromDescriptor(pipel.vertexDescriptor!!)
+            }
+        }
+
         kglBuffer.func()
         kglBuffer.deinit()
     }
 
     actual class KanaCommandBuffer internal constructor() {
-        private var pipeline: KanaPipeline? = null
-        actual fun linkPipeline(pipeline: KanaPipeline) {
-            this.pipeline = pipeline.also {
-                GLES32.glUseProgram(it.program)
-                it.initFromDescriptor(it.vertexDescriptor!!)
-            }
-        }
+        var pipeline: KanaPipeline? = null
 
         actual fun sendBuffer(buffer: BufferedData) { GLES32.glBufferData(GLES32.GL_ARRAY_BUFFER, buffer.size, buffer.buf, GLES32.GL_STATIC_DRAW) }
-        actual fun drawPrimitives(start: Int, end: Int) { GLES32.glDrawArrays(GLES32.GL_TRIANGLES, start, end) }
+        actual fun drawPrimitives(start: Int, end: Int, order: BufferedData?) {
+            if (order != null) {
+                GLES32.glDrawElements(GLES32.GL_TRIANGLES, end - start, GLES32.GL_UNSIGNED_SHORT, order.buf)
+            } else {
+                GLES32.glDrawArrays(GLES32.GL_TRIANGLES, start, end)
+            }
+        }
         fun deinit() { pipeline!!.deInitFromDescriptor() }
     }
 }

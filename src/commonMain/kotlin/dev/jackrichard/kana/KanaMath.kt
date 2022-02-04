@@ -153,3 +153,4 @@ expect class BufferedData {
     val size: Int
 }
 expect fun FloatArray.buffered() : BufferedData
+expect fun ShortArray.buffered() : BufferedData
