@@ -43,17 +43,29 @@ actual object KanaGlobals {
     lateinit var context: Context
 }
 
-actual class KanaTexture private constructor(name: String, ext: String) {
+actual class KanaTexture private constructor(name: String, ext: String, directory: String, options: KanaTextureOptions.() -> Unit) {
     private val textureID = IntArray(1)
 
     init {
         GLES32.glGenTextures(1, textureID, 0)
-
         GLES32.glBindTexture(GLES32.GL_TEXTURE_2D, textureID[0])
-        GLES32.glTexParameteri(GLES32.GL_TEXTURE_2D, GLES32.GL_TEXTURE_MIN_FILTER, GLES32.GL_NEAREST)
-        GLES32.glTexParameteri(GLES32.GL_TEXTURE_2D, GLES32.GL_TEXTURE_MAG_FILTER, GLES32.GL_LINEAR)
 
-        val inps = KanaGlobals.context.resources.assets.open("$name.$ext")
+        KanaTextureOptions().also(options).also {
+            GLES32.glTexParameteri(GLES32.GL_TEXTURE_2D, GLES32.GL_TEXTURE_MIN_FILTER,
+                    when (it.minFilter) {
+                        KanaTextureOptions.KanaTextureParameter.LINEAR -> GLES32.GL_LINEAR
+                        KanaTextureOptions.KanaTextureParameter.NEAREST -> GLES32.GL_NEAREST
+                    }
+                )
+            GLES32.glTexParameteri(GLES32.GL_TEXTURE_2D, GLES32.GL_TEXTURE_MAG_FILTER,
+                    when (it.magFilter) {
+                        KanaTextureOptions.KanaTextureParameter.LINEAR -> GLES32.GL_LINEAR
+                        KanaTextureOptions.KanaTextureParameter.NEAREST -> GLES32.GL_NEAREST
+                    }
+                )
+        }
+
+        val inps = KanaGlobals.context.resources.assets.open("${if (directory.isNotBlank()) "/$directory" else "" }$name.$ext")
         val bitmap = BitmapFactory.decodeStream(inps)
 
         GLUtils.texImage2D(GLES32.GL_TEXTURE_2D, 0, bitmap, 0)
@@ -61,7 +73,7 @@ actual class KanaTexture private constructor(name: String, ext: String) {
     }
 
     actual companion object {
-        actual fun make(name: String, extension: String) = KanaTexture(name, extension)
+        actual fun make(name: String, extension: String, directory: String, options: KanaTextureOptions.() -> Unit) = KanaTexture(name, extension, directory, options)
     }
 }
 

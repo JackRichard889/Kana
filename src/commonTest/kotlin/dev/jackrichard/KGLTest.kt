@@ -20,7 +20,10 @@ class FirstView : KanaRenderer {
     private val vertices = floatArrayOf(-0.5f, 0.5f, -0.5f, -0.5f, 0.5f, -0.5f, 0.5f, 0.5f).buffered()
     private val order = shortArrayOf(0, 1, 2, 0, 2, 3).buffered()
 
-    private val texture = KanaTexture.make("test", "png")
+    private val texture = KanaTexture.make("test", "png") {
+        minFilter = KanaTextureOptions.KanaTextureParameter.LINEAR
+        magFilter = KanaTextureOptions.KanaTextureParameter.LINEAR
+    }
 
     override fun onDrawFrame(context: KanaContext) {
         context.queueUp(pipeline) {

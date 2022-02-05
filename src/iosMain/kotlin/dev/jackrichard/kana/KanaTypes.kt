@@ -55,13 +55,32 @@ actual object KanaGlobals {
     lateinit var commandQueue: MTLCommandQueueProtocol
 }
 
-actual class KanaTexture private constructor(name: String, ext: String) {
-    private var texture: MTLTextureProtocol
+actual class KanaTexture private constructor(name: String, ext: String, directory: String, options: KanaTextureOptions.() -> Unit) {
+    var texture: MTLTextureProtocol
+    val samplerState: MTLSamplerStateProtocol =
+        KanaGlobals.device.newSamplerStateWithDescriptor(
+            MTLSamplerDescriptor().also {
+                    it.normalizedCoordinates = true
+                    it.mipFilter = MTLSamplerMipFilterLinear
+
+                    val state = KanaTextureOptions().also(options)
+                    it.minFilter =
+                        when (state.minFilter) {
+                            KanaTextureOptions.KanaTextureParameter.LINEAR -> MTLSamplerMinMagFilterLinear
+                            KanaTextureOptions.KanaTextureParameter.NEAREST -> MTLSamplerMinMagFilterNearest
+                        }
+                    it.magFilter =
+                        when (state.magFilter) {
+                            KanaTextureOptions.KanaTextureParameter.LINEAR -> MTLSamplerMinMagFilterLinear
+                            KanaTextureOptions.KanaTextureParameter.NEAREST -> MTLSamplerMinMagFilterNearest
+                        }
+                }
+        )!!
 
     init {
         val loader = MTKTextureLoader(device = KanaGlobals.device)
         texture = loader.newTextureWithName(
-            "$name.$ext",
+            "$directory/$name.$ext",
             scaleFactor = 1.0,
             bundle = null,
             options = mapOf(
@@ -73,7 +92,7 @@ actual class KanaTexture private constructor(name: String, ext: String) {
     }
 
     actual companion object {
-        actual fun make(name: String, extension: String) : KanaTexture = KanaTexture(name, extension)
+        actual fun make(name: String, extension: String, directory: String, options: KanaTextureOptions.() -> Unit) : KanaTexture = KanaTexture(name, extension, directory, options)
     }
 }
 

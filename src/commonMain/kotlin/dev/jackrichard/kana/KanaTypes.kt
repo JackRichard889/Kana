@@ -10,9 +10,16 @@ expect class KanaContext {
 
 expect object KanaGlobals
 
+class KanaTextureOptions (
+    var minFilter: KanaTextureParameter = KanaTextureParameter.LINEAR,
+    var magFilter: KanaTextureParameter = KanaTextureParameter.LINEAR
+) {
+    enum class KanaTextureParameter { NEAREST, LINEAR }
+}
+
 expect class KanaTexture {
     companion object {
-        fun make(name: String, extension: String) : KanaTexture
+        fun make(name: String, extension: String, directory: String = "", options: KanaTextureOptions.() -> Unit = {}) : KanaTexture
     }
 }
 
