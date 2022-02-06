@@ -19,8 +19,14 @@ class KGLGLESProtocolDelegate(val context: Context, private val builder: () -> K
     var delegate: KanaRenderer? = null
 
     override fun onSurfaceCreated(gl: GL10?, config: EGLConfig?) {
-        GLES32.glClearColor(0.0f, 0.0f, 0.0f, 1.0f)
-        delegate = builder()
+        delegate = builder()!!.also {
+            GLES32.glClearColor(
+                it.clearColor.r.toFloat(),
+                it.clearColor.g.toFloat(),
+                it.clearColor.b.toFloat(),
+                it.clearColor.a.toFloat()
+            )
+        }
     }
 
     override fun onSurfaceChanged(gl: GL10?, width: Int, height: Int) {

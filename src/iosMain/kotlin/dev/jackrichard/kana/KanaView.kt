@@ -28,9 +28,14 @@ actual object KanaBuilder {
         KanaGlobals.commandQueue = device.newCommandQueue()!!
 
         view.device = device
-        view.delegate = KGLMetalProtocolDelegate(delegate())
-
-        view.clearColor = MTLClearColorMake(1.0, 1.0, 1.0, 1.0)
+        view.delegate = KGLMetalProtocolDelegate(delegate().also { renderer ->
+            view.clearColor = MTLClearColorMake(
+                renderer.clearColor.r,
+                renderer.clearColor.g,
+                renderer.clearColor.b,
+                renderer.clearColor.a
+            )
+        })
         view.colorPixelFormat = MTLPixelFormatBGRA8Unorm_sRGB
         view.depthStencilPixelFormat = MTLPixelFormatDepth32Float
 

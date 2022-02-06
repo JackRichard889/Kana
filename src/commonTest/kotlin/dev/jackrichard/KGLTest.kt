@@ -25,6 +25,8 @@ class FirstView : KanaRenderer {
         magFilter = KanaTextureOptions.KanaTextureParameter.LINEAR
     }
 
+    override var clearColor: KanaColor = color(1.0, 1.0, 1.0, 1.0)
+
     override fun onDrawFrame(context: KanaContext) {
         context.queueUp(pipeline) {
             sendBuffer(vertices)

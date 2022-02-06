@@ -43,3 +43,6 @@ expect class KanaShader private constructor(platform: KanaPlatform, source: Stri
         fun compileShader(platform: KanaPlatform, type: KanaShaderType, name: String, source: String): KanaShader?
     }
 }
+
+class KanaColor(val r: Double, val g: Double, val b: Double, val a: Double)
+fun color(r: Double, g: Double, b: Double, a: Double) : KanaColor = KanaColor(r, g, b, a)
