@@ -120,6 +120,8 @@ class Mat4 internal constructor(
 
 infix fun Number.v(n: Number) : Vec2 = vec2(this.toFloat(), n.toFloat())
 infix fun Vec2.v(n: Number) : Vec3 = vec3(this.a, this.b, n.toFloat())
+infix fun Vec2.v(n: Vec2) : Vec4 = vec4(this.a, this.b, n.a, n.b)
+infix fun Vec3.v(n: Number) : Vec4 = vec4(this.a, this.b, this.c, n.toFloat())
 
 /*
     Descriptors
