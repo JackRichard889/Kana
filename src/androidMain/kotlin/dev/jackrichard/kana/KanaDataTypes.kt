@@ -26,6 +26,11 @@ actual class KanaContext {
     actual class KanaCommandBuffer internal constructor() {
         var pipeline: KanaPipeline? = null
 
+        actual inline fun <reified T : KanaUniforms> sendUniforms(function: (T) -> Unit) {
+            val t = T::class.java.newInstance()
+            t.also(function)
+            t.sendUniforms(pipeline!!.program)
+        }
         actual fun sendBuffer(buffer: BufferedData) { GLES32.glBufferData(GLES32.GL_ARRAY_BUFFER, buffer.size, buffer.buf, GLES32.GL_STATIC_DRAW) }
         actual fun drawPrimitives(start: Int, end: Int, order: BufferedData?) {
             if (order != null) {
@@ -189,4 +194,18 @@ actual class KanaShader private actual constructor(val platform: KanaPlatform, v
         ): KanaShader? = if (platform == KanaPlatform.ANDROID) KanaShader(platform, source, type, name) else null
     }
 
+}
+
+fun KanaUniforms.sendUniforms(program: Int) {
+    uniforms.forEach { uniform ->
+        val loc = GLES32.glGetUniformLocation(program, uniform.name)
+        when (uniform.value!!::class.simpleName) {
+            "Vec2" -> GLES32.glUniform2fv(loc, 1, uniform.value!!.asArray(), 0)
+            "Vec3" -> GLES32.glUniform3fv(loc, 1, uniform.value!!.asArray(), 0)
+            "Vec4" -> GLES32.glUniform4fv(loc, 1, uniform.value!!.asArray(), 0)
+            "Mat2" -> GLES32.glUniformMatrix2fv(loc, 1, false, uniform.value!!.asArray(), 0)
+            "Mat3" -> GLES32.glUniformMatrix3fv(loc, 1, false, uniform.value!!.asArray(), 0)
+            "Mat4" -> GLES32.glUniformMatrix4fv(loc, 1, false, uniform.value!!.asArray(), 0)
+        }
+    }
 }

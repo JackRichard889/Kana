@@ -16,7 +16,7 @@ class FirstView : KanaRenderer {
 
         vertexShader = vertexFunctionAnd to vertexFunctioniOS
         fragmentShader = fragmentFunctionAnd to fragmentFunctioniOS
-        vertexDescriptor = defineDescriptor {
+        vertexDescriptor = vertexDescriptor {
             this vec2 "position"
             this vec4 "color"
         }

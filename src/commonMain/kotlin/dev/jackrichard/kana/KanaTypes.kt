@@ -1,14 +1,10 @@
 package dev.jackrichard.kana
 
 abstract class KanaUniforms {
-    private val uniforms: MutableList<KanaUniformRef<*>> = mutableListOf()
-    class KanaUniformRef<T>(val name: String) {
+    internal val uniforms: MutableList<KanaUniformRef<*>> = mutableListOf()
+    class KanaUniformRef<T : KanaDataType>(val name: String) {
         var value: T? = null
         fun set(v: T) { value = v }
-    }
-
-    fun toArray() : FloatArray {
-        return FloatArray(0)
     }
 
     infix fun vec2(name: String) : KanaUniformRef<Vec2> = KanaUniformRef<Vec2>(name).also { uniforms.add(it) }
@@ -22,7 +18,7 @@ abstract class KanaUniforms {
 expect class KanaContext {
     fun queueUp(pipeline: KanaPipeline, func: KanaCommandBuffer.() -> Unit)
     class KanaCommandBuffer {
-        fun <T : KanaUniforms> sendUniforms(function: (T) -> Unit)
+        inline fun <reified T : KanaUniforms> sendUniforms(function: (T) -> Unit)
         fun sendBuffer(buffer: BufferedData)
         fun drawPrimitives(start: Int, end: Int, order: BufferedData? = null)
     }

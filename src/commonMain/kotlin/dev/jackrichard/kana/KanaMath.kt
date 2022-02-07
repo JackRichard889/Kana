@@ -2,24 +2,37 @@ package dev.jackrichard.kana
 
 import kotlin.reflect.KClass
 
-open class KanaShaderDataType
+interface KanaDataType {
+    fun asArray() : FloatArray
+}
 
 /*
     Vector
  */
 fun vec2(a: Float, b: Float) = Vec2(a, b)
-class Vec2 internal constructor(val a: Float, val b: Float) : KanaShaderDataType() {
+class Vec2 internal constructor(val a: Float, val b: Float) : KanaDataType {
     operator fun plus(c: Float) : Vec3 = Vec3(a, b, c)
     operator fun plus(cd: Vec2) : Vec4 = Vec4(a, b, cd.a, cd.b)
+    override fun asArray(): FloatArray {
+        return floatArrayOf(a, b)
+    }
 }
 
 fun vec3(a: Float, b: Float, c: Float) = Vec3(a, b, c)
-class Vec3 internal constructor(val a: Float, val b: Float, val c: Float) : KanaShaderDataType() { operator fun plus(d: Float) : Vec4 = Vec4(a, b, c, d) }
+class Vec3 internal constructor(val a: Float, val b: Float, val c: Float) : KanaDataType {
+    operator fun plus(d: Float) : Vec4 = Vec4(a, b, c, d)
+    override fun asArray(): FloatArray {
+        return floatArrayOf(a, b, c)
+    }
+}
 operator fun Float.plus(b: Vec2) = Vec3(this, b.a, b.b)
 
 fun vec4(a: Float, b: Float, c: Float, d: Float) = Vec4(a, b, c, d)
-class Vec4 internal constructor(val a: Float, val b: Float, val c: Float, val d: Float) : KanaShaderDataType()
-operator fun Float.plus(b: Vec3) = Vec4(this, b.a, b.b, b.c)
+class Vec4 internal constructor(val a: Float, val b: Float, val c: Float, val d: Float) : KanaDataType {
+    override fun asArray(): FloatArray {
+        return floatArrayOf(a, b, c, d)
+    }
+}
 
 
 /*
@@ -29,7 +42,7 @@ fun mat2(a: Float, b: Float, c: Float, d: Float) = Mat2(a, b, c, d)
 class Mat2 internal constructor(
     val a: Float, val b: Float,
     val c: Float, val d: Float
-) {
+) : KanaDataType {
     operator fun times(e: Float) : Mat2 = mat2(
         a * e, b * e,
         c * e, d * e
@@ -46,6 +59,10 @@ class Mat2 internal constructor(
             0F, 1F
         )
     }
+
+    override fun asArray(): FloatArray {
+        return floatArrayOf(a, b, c, d)
+    }
 }
 
 fun mat3(a: Float, b: Float, c: Float, d: Float, e: Float, f: Float, g: Float, h: Float, i: Float) = Mat3(a, b, c, d, e, f, g, h, i)
@@ -53,7 +70,7 @@ class Mat3 internal constructor(
     val a: Float, val b: Float, val c: Float,
     val d: Float, val e: Float, val f: Float,
     val g: Float, val h: Float, val i: Float
-) {
+) : KanaDataType {
     operator fun times(j: Float) : Mat3 = mat3(
         a * j, b * j, c * j,
         d * j, e * j, f * j,
@@ -69,6 +86,10 @@ class Mat3 internal constructor(
             0F, 0F, 1F
         )
     }
+
+    override fun asArray(): FloatArray {
+        return floatArrayOf(a, b, c, d, e, f, g, h, i)
+    }
 }
 
 fun mat4(a: Float, b: Float, c: Float, d: Float, e: Float, f: Float, g: Float, h: Float, i: Float, j: Float, k: Float, l: Float, m: Float, n: Float, o: Float, p: Float) = Mat4(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p)
@@ -77,7 +98,7 @@ class Mat4 internal constructor(
     val e: Float, val f: Float, val g: Float, val h: Float,
     val i: Float, val j: Float, val k: Float, val l: Float,
     val m: Float, val n: Float, val o: Float, val p: Float
-) {
+) : KanaDataType {
     operator fun times(q: Float) : Mat4 = mat4(
             this.a * q, this.b * q, this.c * q, this.d * q,
             this.e * q, this.f * q, this.g * q, this.h * q,
@@ -116,6 +137,10 @@ class Mat4 internal constructor(
             0F, 0F, 0F, 1F
         )
     }
+
+    override fun asArray(): FloatArray {
+        return floatArrayOf(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p)
+    }
 }
 
 infix fun Number.v(n: Number) : Vec2 = vec2(this.toFloat(), n.toFloat())
@@ -129,7 +154,7 @@ infix fun Vec3.v(n: Number) : Vec4 = vec4(this.a, this.b, this.c, n.toFloat())
 
 class VertexDescriptorElement(n: String, s: Int, t: KClass<*>) {
     companion object {
-        inline fun <reified T : KanaShaderDataType> createNew(n: String, s: Int) : VertexDescriptorElement = VertexDescriptorElement(n, s, T::class)
+        inline fun <reified T : KanaDataType> createNew(n: String, s: Int) : VertexDescriptorElement = VertexDescriptorElement(n, s, T::class)
     }
 
     val type: KClass<*> = t
@@ -145,7 +170,7 @@ class VertexDescriptor {
     infix fun vec4(name: String) = elements.add(VertexDescriptorElement.createNew<Vec4>(name, 4))
 }
 
-fun defineDescriptor(block: VertexDescriptor.() -> Unit) : VertexDescriptor = VertexDescriptor().also(block)
+fun vertexDescriptor(block: VertexDescriptor.() -> Unit) : VertexDescriptor = VertexDescriptor().also(block)
 
 /*
     Floats and buffers

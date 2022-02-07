@@ -35,6 +35,10 @@ actual class KanaContext {
     actual class KanaCommandBuffer internal constructor(
         private val renderEncoder: MTLRenderCommandEncoderProtocol
     ) {
+        actual inline fun <T : KanaUniforms> sendUniforms(function: (T) -> Unit) {
+
+        }
+
         actual fun sendBuffer(buffer: BufferedData) {
             renderEncoder.setVertexBuffer(buffer.buf, 0, 0)
         }
@@ -142,7 +146,7 @@ actual class KanaPipeline private actual constructor() {
                             "Vec2" -> MTLVertexFormatFloat2
                             "Vec3" -> MTLVertexFormatFloat3
                             "Vec4" -> MTLVertexFormatFloat4
-                            else -> throw Exception("Unknown data type: ${it.first.type.simpleName}!")
+                            else -> throw Exception("Unsupported data type: ${it.first.type.simpleName}!")
                         }
                     mtlDescriptor.attributes.objectAtIndexedSubscript(it.second.toULong()).bufferIndex = 0u
                     mtlDescriptor.attributes.objectAtIndexedSubscript(it.second.toULong()).offset = calcOffset(it.second).toULong()
@@ -172,5 +176,9 @@ actual class KanaShader private actual constructor(val platform: KanaPlatform, s
             source: String
         ): KanaShader? = if (platform == KanaPlatform.IOS) KanaShader(platform, source, type, name) else null
     }
+
+}
+
+fun KanaUniforms.sendUniforms() {
 
 }
