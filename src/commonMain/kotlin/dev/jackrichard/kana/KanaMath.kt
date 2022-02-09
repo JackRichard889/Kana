@@ -1,5 +1,7 @@
 package dev.jackrichard.kana
 
+import kotlin.math.cos
+import kotlin.math.sin
 import kotlin.reflect.KClass
 
 interface KanaDataType {
@@ -121,13 +123,61 @@ class Mat4 internal constructor(
             m, n, o, p
         )
 
+    fun translate(x: Float = 0.0F, y: Float = 0.0F, z: Float = 0.0F) : Mat4 =
+        mat4(
+            a, b, c, x + d,
+            e, f, g, y + h,
+            i, j, k, z + l,
+            m, n, o, p
+        )
+
     fun scale(vec: Vec3) : Mat4 =
         mat4(
             vec.a * a, b, c, d,
-            e, vec.b * b, g, h,
-            i, j, vec.c * c, l,
+            e, vec.b * f, g, h,
+            i, j, vec.c * k, l,
             m, n, o, p
         )
+
+    fun scale(sc: Float) : Mat4 =
+        mat4(
+            sc * a, b, c, d,
+            e, sc * f, g, h,
+            i, j, sc * k, l,
+            m, n, o, p
+        )
+
+    fun rotate(x: Float = 0.0F, y: Float = 0.0F, z: Float = 0.0F) : Mat4 {
+        var tempMat = this
+        if (x != 0.0F) {
+            tempMat = mat4(
+                a, b, c, d,
+                e, f + cos(x), g + (-1 * sin(x)), h,
+                i, j + sin(x), k + cos(x), l,
+                m, n, o, p
+            )
+        }
+
+        if (y != 0.0F) {
+            tempMat = mat4(
+                tempMat.a + cos(y), tempMat.b, tempMat.c + sin(y), tempMat.d,
+                tempMat.e, tempMat.f, tempMat.g, tempMat.h,
+                tempMat.i + (-1 * sin(y)), tempMat.j, tempMat.k + cos(y), l,
+                tempMat.m, tempMat.n, tempMat.o, tempMat.p
+            )
+        }
+
+        if (z != 0.0F) {
+            tempMat = mat4(
+                tempMat.a + cos(z), tempMat.b + (-1 * sin(z)), tempMat.c, tempMat.d,
+                tempMat.e + sin(z), tempMat.f + cos(z), tempMat.g, tempMat.h,
+                tempMat.i, tempMat.j, tempMat.k, tempMat.l,
+                tempMat.m, tempMat.n, tempMat.o, tempMat.p
+            )
+        }
+
+        return tempMat
+    }
 
     companion object {
         val identity: Mat4 = mat4(
@@ -139,7 +189,7 @@ class Mat4 internal constructor(
     }
 
     override fun asArray(): FloatArray {
-        return floatArrayOf(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p)
+        return floatArrayOf(a, e, i, m, b, f, j, n, c, g, k, o, d, h, l, p)
     }
 }
 
