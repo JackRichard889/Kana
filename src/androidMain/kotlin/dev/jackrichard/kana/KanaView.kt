@@ -9,7 +9,7 @@ import javax.microedition.khronos.opengles.GL10
 actual typealias KanaView = GLSurfaceView
 actual object KanaBuilder {
     fun buildView(ctx: Context, delegate: () -> KanaRenderer): KanaView =
-        GLSurfaceView(ctx).also {
+        GLSurfaceView(ctx.also { KanaGlobals.context = it }).also {
             it.setEGLContextClientVersion(3)
             it.setRenderer(KGLGLESProtocolDelegate(ctx, delegate))
         }

@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.BitmapFactory
 import android.opengl.GLES32
 import android.opengl.GLUtils
+import dev.jackrichard.kana.specifics.GLESMesh
 import java.nio.IntBuffer
 import javax.microedition.khronos.opengles.GL10
 
@@ -207,5 +208,16 @@ fun KanaUniforms.sendUniforms(program: Int) {
             "Mat3" -> GLES32.glUniformMatrix3fv(loc, 1, false, uniform.value!!.asArray(), 0)
             "Mat4" -> GLES32.glUniformMatrix4fv(loc, 1, false, uniform.value!!.asArray(), 0)
         }
+    }
+}
+
+actual class Kana3DModel private constructor(val mesh: GLESMesh) {
+    val normals: BufferedData = mesh.normals.buffered()
+    val textureCoordinates: BufferedData = mesh.textureCoordinates.buffered()
+    val positions: BufferedData = mesh.positions.buffered()
+
+    actual companion object {
+        actual fun make(name: String, extension: String, directory: String): Kana3DModel =
+            Kana3DModel(GLESMesh(KanaGlobals.context, "$directory$name.$extension"))
     }
 }

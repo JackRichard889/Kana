@@ -39,6 +39,12 @@ expect class KanaTexture {
     }
 }
 
+expect class Kana3DModel {
+    companion object {
+        fun make(name: String, extension: String, directory: String = "") : Kana3DModel
+    }
+}
+
 expect class KanaPipeline private constructor() {
     var vertexDescriptor: VertexDescriptor?
     var vertexShader: Pair<KanaShader?, KanaShader?>

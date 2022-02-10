@@ -1,11 +1,10 @@
 package dev.jackrichard.kana
 
+import platform.Foundation.NSBundle
 import platform.Foundation.NSError
 import platform.Metal.*
-import platform.MetalKit.MTKTextureLoader
-import platform.MetalKit.MTKTextureLoaderOptionGenerateMipmaps
-import platform.MetalKit.MTKTextureLoaderOptionSRGB
-import platform.MetalKit.MTKView
+import platform.MetalKit.*
+import platform.ModelIO.MDLAsset
 
 actual class KanaContext {
     lateinit var delegateView: MTKView
@@ -180,5 +179,18 @@ actual class KanaShader private actual constructor(val platform: KanaPlatform, s
 }
 
 fun KanaUniforms.sendUniforms() {
+    // TODO: need to send uniforms :\
+}
 
+actual class Kana3DModel private constructor(val mesh: MTKMesh) {
+    val a = (mesh.vertexBuffers.first() as MTKMeshBuffer)
+    actual companion object {
+        actual fun make(name: String, extension: String, directory: String): Kana3DModel {
+            val file = NSBundle.mainBundle.URLForResource(name, extension, directory.ifBlank { null })
+
+            // TODO: vertex descriptor null :\
+            val asset = MDLAsset(uRL = file, vertexDescriptor = null, bufferAllocator = null)
+            return Kana3DModel((MTKMesh.newMeshesFromAsset(asset, KanaGlobals.device, null, null)?.get(1) as List<MTKMesh>).first())
+        }
+    }
 }

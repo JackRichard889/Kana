@@ -35,6 +35,8 @@ class FirstView : KanaRenderer {
 
     override var clearColor: KanaColor = color(1.0, 1.0, 1.0, 1.0)
 
+    private val model = Kana3DModel.make("test", "obj")
+
     override fun onDrawFrame(context: KanaContext) {
         context.queueUp(pipeline) {
             projectionMatrix = projectionMatrix.translate(2 v 2 v 2)
