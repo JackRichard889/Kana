@@ -49,6 +49,10 @@ actual class KanaContext {
                 renderEncoder.drawPrimitives(MTLPrimitiveTypeTriangle, start.toULong(), end.toULong(), 1)
             }
         }
+
+        actual fun drawMeshModel(mesh: Kana3DModel) {
+
+        }
     }
 }
 

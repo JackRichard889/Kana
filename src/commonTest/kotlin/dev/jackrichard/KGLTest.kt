@@ -45,8 +45,10 @@ class FirstView : KanaRenderer {
                 it.viewModelMatrix.set(viewModelMatrix)
                 it.projectionMatrix.set(projectionMatrix)
             }
-            sendBuffer(vertices)
-            drawPrimitives(0, 3, order = order)
+            // sendBuffer(vertices)
+            // drawPrimitives(0, 3, order = order)
+
+            drawMeshModel(model)
         }
     }
 }

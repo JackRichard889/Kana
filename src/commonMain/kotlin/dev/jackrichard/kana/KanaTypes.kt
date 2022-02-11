@@ -21,6 +21,7 @@ expect class KanaContext {
         inline fun <reified T : KanaUniforms> sendUniforms(function: (T) -> Unit)
         fun sendBuffer(buffer: BufferedData)
         fun drawPrimitives(start: Int, end: Int, order: BufferedData? = null)
+        fun drawMeshModel(mesh: Kana3DModel)
     }
 }
 

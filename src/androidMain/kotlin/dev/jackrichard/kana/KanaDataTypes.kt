@@ -40,6 +40,11 @@ actual class KanaContext {
                 GLES32.glDrawArrays(GLES32.GL_TRIANGLES, start, end)
             }
         }
+        actual fun drawMeshModel(mesh: Kana3DModel) {
+            GLES32.glBufferData(GLES32.GL_ARRAY_BUFFER, mesh.positions.size, mesh.positions.buf, GLES32.GL_STATIC_DRAW)
+            GLES32.glDrawArrays(GLES32.GL_TRIANGLES, 0, mesh.positions.size / 12)
+        }
+
         fun deinit() { pipeline!!.deInitFromDescriptor() }
     }
 }
